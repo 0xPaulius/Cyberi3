@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>avatar lab</title>
+    <!-- Versioned per load so rig edits are never masked by a cached copy. -->
+    <style>
+      body {
+        margin: 0;
+        padding: 24px;
+        background: #1b2430;
+        color: #dfe7f0;
+        font: 14px/1.5 ui-sans-serif, system-ui, sans-serif;
+      }
+      h2 {
+        font-size: 13px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: #8fa3ba;
+        margin: 28px 0 10px;
+      }
+      .row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 18px;
+        align-items: flex-end;
+      }
+      .cell {
+        background: #243040;
+        border: 1px solid #31414f;
+        border-radius: 10px;
+        padding: 10px;
+        text-align: center;
+      }
+      .cell span {
+        display: block;
+        font-size: 11px;
+        color: #8fa3ba;
+        margin-top: 6px;
+      }
+      /* Reference grid to check joint placement against stage coordinates. */
+      .grid {
+        position: relative;
+        background-image:
+          linear-gradient(to right, #ffffff14 1px, transparent 1px),
+          linear-gradient(to bottom, #ffffff14 1px, transparent 1px),
+          linear-gradient(to right, #ff5c5c55 1px, transparent 1px);
+        background-size:
+          calc(50px * var(--z)) calc(50px * var(--z)),
+          calc(50px * var(--z)) calc(50px * var(--z)),
+          calc(260px * var(--z)) 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>rig at scale 1 (50px grid, red centre line)</h2>
+    <div class="row" id="big"></div>
+
+    <h2>stance tuning (hip-r-x / waist-y)</h2>
+    <div class="row" id="stance"></div>
+
+    <h2>dance animations</h2>
+    <div class="row" id="dances"></div>
+
+    <h2>dj animations</h2>
+    <div class="row" id="dj"></div>
+
+    <h2>hats</h2>
+    <div class="row" id="hats"></div>
+
+    <h2>face extras</h2>
+    <div class="row" id="faces"></div>
+
+    <h2>costumes</h2>
+    <div class="row" id="costumes"></div>
+
+    <h2>auras</h2>
+    <div class="row" id="auras"></div>
+
+    <h2>random crowd</h2>
+    <div class="row" id="crowd"></div>
+
+    <script type="module">
+      import { buildAvatar, DANCES, DJ_ANIMATIONS } from '/assets/js/avatar.js';
+
+      await new Promise((resolve, reject) => {
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = `/assets/css/avatar.css?t=${Date.now()}`;
+        link.onload = resolve;
+        link.onerror = reject;
+        document.head.append(link);
+      });
+
+      const options = await (await fetch('/api/avatars/options')).json();
+      const pick = (list) => list[Math.floor(Math.random() * list.length)];
+
+      function randomAvatar() {
+        return {
+          skin: pick(options.skin),
+          hairColor: pick(options.hairColor),
+          hairStyle: pick(options.hairStyle),
+          shirtColor: pick(options.shirtColor),
+          shirtStyle: pick(options.shirtStyle),
+          sleeve: 'long',
+          pantsColor: pick(options.pantsColor),
+          pantsStyle: pick(options.pantsStyle),
+          trouser: 'long',
+          shoeColor: pick(options.shoeColor),
+          shoeStyle: pick(options.shoeStyle),
+          eyeColor: pick(options.eyeColor),
+          eyeSize: 'large',
+          browColor: pick(options.browColor),
+          browStyle: pick(options.browStyle),
+          mouth: pick(options.mouth),
+          nose: pick(options.nose),
+          dance: 'bob',
+        };
+      }
+
+      const reference = randomAvatar();
+
+      function cell(avatar, anim, scale, label, withGrid = false) {
+        const wrap = document.createElement('div');
+        wrap.className = 'cell';
+        const holder = document.createElement('div');
+        if (withGrid) {
+          holder.className = 'grid';
+          holder.style.setProperty('--z', scale);
+        }
+        holder.append(buildAvatar(avatar, { scale, anim }));
+        const tag = document.createElement('span');
+        tag.textContent = label;
+        wrap.append(holder, tag);
+        return wrap;
+      }
+
+      document.getElementById('big').append(
+        cell(reference, 'idle', 1, 'idle', true),
+        cell(reference, 'bob', 1, 'bob', true),
+      );
+
+      for (const [hip, waistY, mirror] of [
+        [283, 372, true],
+        [295, 372, true],
+        [307, 372, true],
+        [295, 360, true],
+        [295, 372, false],
+      ]) {
+        const node = cell(reference, 'idle', 0.62, `hip ${hip} / waist ${waistY}${mirror ? '' : ' / no mirror'}`);
+        const av = node.querySelector('.av');
+        av.style.setProperty('--hip-r-x', `${hip}px`);
+        av.style.setProperty('--hip-c-y', `${waistY}px`);
+        if (!mirror) av.querySelector('.av__leg.is-left').style.transform = 'none';
+        document.getElementById('stance').append(node);
+      }
+
+      for (const anim of DANCES) {
+        document.getElementById('dances').append(cell(reference, anim, 0.42, anim));
+      }
+      for (const anim of [...DJ_ANIMATIONS, 'walk']) {
+        document.getElementById('dj').append(cell(reference, anim, 0.42, anim));
+      }
+      // The extra layers, each against the same reference body so a misplaced
+      // anchor shows up immediately. Auras animate, so they get a dance.
+      for (const [key, target] of [
+        ['hat', 'hats'],
+        ['faceExtra', 'faces'],
+        ['costume', 'costumes'],
+        ['aura', 'auras'],
+      ]) {
+        for (const value of options[key] ?? []) {
+          const avatar = { ...reference, [key]: value };
+          const anim = key === 'aura' ? 'bob' : 'idle';
+          document.getElementById(target).append(cell(avatar, anim, 0.62, value));
+        }
+      }
+
+      for (let i = 0; i < 10; i += 1) {
+        const avatar = randomAvatar();
+        document.getElementById('crowd').append(cell(avatar, pick(DANCES), 0.3, avatar.hairStyle));
+      }
+    </script>
+  </body>
+</html>

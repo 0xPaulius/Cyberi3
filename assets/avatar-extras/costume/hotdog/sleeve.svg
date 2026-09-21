@@ -1,0 +1,8 @@
+<!-- Costume sleeve: 171x142. Outline traced from the pack's own sleeve. -->
+<svg xmlns="http://www.w3.org/2000/svg" width="171" height="142" viewBox="0 0 171 142">
+  <g>
+    <polygon fill="#e6bf85" points="7,0 52,10 78,20 98,30 113,40 126,50 137,60 147,70 155,80 162,90 169,100 167,110 161,120 151,130 133,140 130,140 122,130 114,120 103,110 88,100 66,90 21,80 14,70 8,60 3,50 1,40 0,30 0,20 3,10"/>
+    <path d="M10 8 Q60 30 110 68 Q140 92 152 118" stroke="#f3d3a1" stroke-width="9" fill="none" stroke-linecap="round"/>
+    <path d="M46 4 Q96 32 140 86 Q154 104 160 120" stroke="#cfa468" stroke-width="6" fill="none" stroke-linecap="round"/>
+  </g>
+</svg>

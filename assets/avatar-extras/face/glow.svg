@@ -1,0 +1,20 @@
+<!-- Face slot: 200x120. Eye centres (54.5, 46.5) and (145.5, 46.5).
+     Eyes lit from within, the way a lich's are. -->
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="120" viewBox="0 0 200 120">
+  <defs>
+    <radialGradient id="eye" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="0.28" stop-color="#bff4ff"/>
+      <stop offset="0.5" stop-color="#3fe0ff" stop-opacity="0.9"/>
+      <stop offset="1" stop-color="#3fe0ff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <g>
+    <circle cx="54.5" cy="46.5" r="30" fill="url(#eye)"/>
+    <circle cx="145.5" cy="46.5" r="30" fill="url(#eye)"/>
+    <path d="M20 46.5 H89" stroke="#bff4ff" stroke-width="2.5" stroke-linecap="round" opacity="0.7"/>
+    <path d="M111 46.5 H180" stroke="#bff4ff" stroke-width="2.5" stroke-linecap="round" opacity="0.7"/>
+    <ellipse cx="54.5" cy="46.5" rx="9" ry="6" fill="#fff"/>
+    <ellipse cx="145.5" cy="46.5" rx="9" ry="6" fill="#fff"/>
+  </g>
+</svg>

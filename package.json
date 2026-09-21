@@ -1,0 +1,22 @@
+{
+  "name": "plugdj",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Self-hosted plug.dj-style synced YouTube listening room",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "assets": "bash scripts/fetch-assets.sh"
+  },
+  "dependencies": {
+    "better-sqlite3": "^13.0.3",
+    "cookie": "^2.0.1",
+    "express": "^5.2.1",
+    "socket.io": "^4.8.3",
+    "youtubei.js": "^18.0.0"
+  }
+}

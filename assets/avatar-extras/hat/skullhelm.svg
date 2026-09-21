@@ -1,0 +1,49 @@
+<!-- Hat slot: 220x150. Crown centre (110, 44), head spans x 23.5 to 196.5.
+     A bone skull worn as a helm, iron-rimmed, with horns sweeping out from the
+     temples. The sockets sit on the forehead, above the wearer's own eyes. -->
+<svg xmlns="http://www.w3.org/2000/svg" width="220" height="150" viewBox="0 0 220 150">
+  <defs>
+    <linearGradient id="bone" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f1ead8"/>
+      <stop offset="1" stop-color="#b8ab8c"/>
+    </linearGradient>
+    <linearGradient id="horn" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0" stop-color="#cfc3a4"/>
+      <stop offset="1" stop-color="#f3ecda"/>
+    </linearGradient>
+    <radialGradient id="socket" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#3fe0ff"/>
+      <stop offset="0.45" stop-color="#0f6f8a"/>
+      <stop offset="1" stop-color="#120d0a"/>
+    </radialGradient>
+  </defs>
+  <g>
+    <!-- horns -->
+    <path d="M46 80 C22 74 6 48 14 12 C24 40 38 58 60 70 Z" fill="url(#horn)"/>
+    <path d="M174 80 C198 74 214 48 206 12 C196 40 182 58 160 70 Z" fill="url(#horn)"/>
+    <path d="M22 26 C26 44 36 58 52 68" stroke="#9c8f70" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <path d="M198 26 C194 44 184 58 168 68" stroke="#9c8f70" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <!-- dome -->
+    <path d="M40 92 C36 44 66 14 110 14 C154 14 184 44 180 92 L166 100 L54 100 Z" fill="url(#bone)"/>
+    <path d="M58 40 C70 26 88 20 108 20" stroke="#fbf7ec" stroke-width="5" fill="none" stroke-linecap="round" opacity="0.8"/>
+    <!-- cracks -->
+    <path d="M132 24 L138 40 L132 48 L140 60" stroke="#8d8062" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    <path d="M70 34 L66 48" stroke="#8d8062" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    <!-- sockets and nose -->
+    <ellipse cx="80" cy="82" rx="16" ry="13" fill="url(#socket)"/>
+    <ellipse cx="140" cy="82" rx="16" ry="13" fill="url(#socket)"/>
+    <ellipse cx="80" cy="82" rx="16" ry="13" fill="none" stroke="#7d7057" stroke-width="2"/>
+    <ellipse cx="140" cy="82" rx="16" ry="13" fill="none" stroke="#7d7057" stroke-width="2"/>
+    <path d="M110 84 L103 98 L117 98 Z" fill="#2a2119"/>
+    <!-- iron rim -->
+    <path d="M40 92 Q110 112 180 92 L180 102 Q110 122 40 102 Z" fill="#3a4150"/>
+    <path d="M40 92 Q110 112 180 92" stroke="#5c6678" stroke-width="2" fill="none"/>
+    <g fill="#e6c476">
+      <circle cx="58" cy="100" r="3"/>
+      <circle cx="84" cy="105" r="3"/>
+      <circle cx="110" cy="107" r="3"/>
+      <circle cx="136" cy="105" r="3"/>
+      <circle cx="162" cy="100" r="3"/>
+    </g>
+  </g>
+</svg>

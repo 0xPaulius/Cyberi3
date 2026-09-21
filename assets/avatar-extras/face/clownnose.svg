@@ -1,0 +1,8 @@
+<!-- Face slot: 200x120. The nose sits at (100.5, 64.5). -->
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="120" viewBox="0 0 200 120">
+  <g>
+    <circle cx="100.5" cy="64.5" r="21" fill="#d63b3b"/>
+    <circle cx="100.5" cy="64.5" r="21" fill="none" stroke="#a82a2a" stroke-width="2"/>
+    <ellipse cx="92" cy="56" rx="7" ry="5" fill="#ef8080" transform="rotate(-28 92 56)"/>
+  </g>
+</svg>

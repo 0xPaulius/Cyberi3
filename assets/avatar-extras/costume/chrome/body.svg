@@ -1,0 +1,37 @@
+<!-- Costume torso canvas: 176x200. Axis x=89, shoulders y=26, hips y=200.
+     Millennium chrome puffer: mirror-silver panels, a holographic band across
+     the chest, and a centre zip. -->
+<svg xmlns="http://www.w3.org/2000/svg" width="176" height="200" viewBox="0 0 176 200">
+  <defs>
+    <linearGradient id="chrome" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="0.35" stop-color="#cfe6f7"/>
+      <stop offset="0.5" stop-color="#6d8ca6"/>
+      <stop offset="0.62" stop-color="#e2f1ff"/>
+      <stop offset="1" stop-color="#9fb8cc"/>
+    </linearGradient>
+    <linearGradient id="holo" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#ff9ee8" stop-opacity="0.55"/>
+      <stop offset="0.5" stop-color="#3fe0ff" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#b8ff9e" stop-opacity="0.55"/>
+    </linearGradient>
+  </defs>
+  <g>
+    <path d="M12 62 Q12 30 40 26 L62 26 Q89 42 116 26 L138 26 Q165 30 165 62 L165 200 H12 Z" fill="url(#chrome)"/>
+    <!-- quilting -->
+    <g stroke="#7d97ad" stroke-width="2" fill="none" opacity="0.6">
+      <path d="M12 78 Q89 92 165 78"/>
+      <path d="M12 112 Q89 126 165 112"/>
+      <path d="M12 146 Q89 160 165 146"/>
+      <path d="M12 180 Q89 194 165 180"/>
+    </g>
+    <path d="M12 92 Q89 106 165 92 L165 110 Q89 124 12 110 Z" fill="url(#holo)"/>
+    <!-- zip -->
+    <path d="M89 44 V200" stroke="#2b3a4c" stroke-width="4"/>
+    <path d="M89 48 V196" stroke="#fff" stroke-width="1.5" stroke-dasharray="3 3"/>
+    <rect x="84" y="128" width="10" height="16" rx="3" fill="#3fe0ff"/>
+    <!-- collar -->
+    <path d="M56 26 Q89 48 122 26 L130 40 Q89 66 48 40 Z" fill="#dcecf8"/>
+    <path d="M56 26 Q89 48 122 26" stroke="#7d97ad" stroke-width="2" fill="none"/>
+  </g>
+</svg>

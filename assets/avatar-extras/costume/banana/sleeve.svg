@@ -1,0 +1,12 @@
+<!--
+  Costume sleeve: 171x142, the same canvas as a Kenney sleeve, so it sits on
+  the arm bone and swings with it. The outline traces the pack's own sleeve,
+  measured from its alpha: shoulder at (7,3), wrist at (141,129).
+-->
+<svg xmlns="http://www.w3.org/2000/svg" width="171" height="142" viewBox="0 0 171 142">
+  <g>
+    <polygon fill="#f5cf3f" points="7,0 52,10 78,20 98,30 113,40 126,50 137,60 147,70 155,80 162,90 169,100 167,110 161,120 151,130 133,140 130,140 122,130 114,120 103,110 88,100 66,90 21,80 14,70 8,60 3,50 1,40 0,30 0,20 3,10"/>
+    <path d="M10 8 Q60 30 110 68 Q140 92 152 118" stroke="#ffe066" stroke-width="9" fill="none" stroke-linecap="round"/>
+    <path d="M40 6 Q92 34 138 88 Q152 106 158 122" stroke="#e0b224" stroke-width="6" fill="none" stroke-linecap="round"/>
+  </g>
+</svg>

@@ -1,0 +1,14 @@
+<!-- Costume hip canvas: 176x54. Heart-print boxer shorts, cut like normal pants. -->
+<svg xmlns="http://www.w3.org/2000/svg" width="176" height="54" viewBox="0 0 176 54">
+  <g>
+    <path d="M12 0 H165 V32 Q154 50 130 50 Q100 50 88 30 Q76 50 48 50 Q22 50 12 32 Z" fill="#dfe6f2"/>
+    <path d="M12 0 H70 Q66 28 52 50 Q22 50 12 32 Z" fill="#eef2f9"/>
+    <rect x="12" y="0" width="153" height="9" fill="#b9c5db"/>
+    <g fill="#d9534f">
+      <path d="M36 22 a5 5 0 0 1 9 0 a5 5 0 0 1 9 0 q0 8 -9 14 q-9 -6 -9 -14 Z"/>
+      <path d="M108 20 a4 4 0 0 1 7.5 0 a4 4 0 0 1 7.5 0 q0 6.5 -7.5 11.5 q-7.5 -5 -7.5 -11.5 Z"/>
+      <path d="M136 32 a3.5 3.5 0 0 1 6.5 0 a3.5 3.5 0 0 1 6.5 0 q0 5.5 -6.5 9.5 q-6.5 -4 -6.5 -9.5 Z"/>
+      <path d="M70 34 a3 3 0 0 1 5.5 0 a3 3 0 0 1 5.5 0 q0 4.5 -5.5 8 q-5.5 -3.5 -5.5 -8 Z"/>
+    </g>
+  </g>
+</svg>

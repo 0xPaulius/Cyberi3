@@ -1,0 +1,16 @@
+<!-- Costume hip canvas: 176x54. Silver cargo pants, cut like normal pants. -->
+<svg xmlns="http://www.w3.org/2000/svg" width="176" height="54" viewBox="0 0 176 54">
+  <defs>
+    <linearGradient id="chrome" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#dcecf8"/>
+      <stop offset="0.5" stop-color="#8aa6bd"/>
+      <stop offset="1" stop-color="#c8dbe8"/>
+    </linearGradient>
+  </defs>
+  <g>
+    <path d="M12 0 H165 V32 Q154 50 130 50 Q100 50 88 30 Q76 50 48 50 Q22 50 12 32 Z" fill="url(#chrome)"/>
+    <rect x="12" y="0" width="153" height="9" fill="#2b3a4c"/>
+    <rect x="80" y="-1" width="16" height="11" rx="2" fill="#3fe0ff"/>
+    <path d="M88 9 V30" stroke="#5b7389" stroke-width="2"/>
+  </g>
+</svg>

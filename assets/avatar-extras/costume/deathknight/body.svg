@@ -1,0 +1,50 @@
+<!-- Costume torso canvas: 176x200. Axis x=89, shoulders y=26, hips y=200.
+     Dark plate over a gambeson: a close-fitting cuirass with gold trim, spiked
+     pauldrons, and a skull on the breastplate lit by a rune line. -->
+<svg xmlns="http://www.w3.org/2000/svg" width="176" height="200" viewBox="0 0 176 200">
+  <defs>
+    <linearGradient id="iron" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3a4354"/>
+      <stop offset="1" stop-color="#151a24"/>
+    </linearGradient>
+    <linearGradient id="plate" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#4a5566"/>
+      <stop offset="0.5" stop-color="#242b38"/>
+      <stop offset="1" stop-color="#3a4354"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#efd48c"/>
+      <stop offset="0.5" stop-color="#b7852c"/>
+      <stop offset="1" stop-color="#e6c476"/>
+    </linearGradient>
+  </defs>
+  <g>
+    <path d="M12 62 Q12 30 40 26 L62 26 Q89 42 116 26 L138 26 Q165 30 165 62 L165 200 H12 Z" fill="url(#iron)"/>
+    <!-- breastplate -->
+    <path d="M34 60 Q89 46 144 60 L138 150 Q89 168 40 150 Z" fill="url(#plate)"/>
+    <path d="M34 60 Q89 46 144 60 L138 150 Q89 168 40 150 Z" fill="none" stroke="url(#gold)" stroke-width="3"/>
+    <path d="M89 56 V160" stroke="#0e1219" stroke-width="2.5"/>
+    <!-- rune glow and skull -->
+    <path d="M52 112 H126" stroke="#3fe0ff" stroke-width="6" opacity="0.25" stroke-linecap="round"/>
+    <path d="M52 112 H126" stroke="#3fe0ff" stroke-width="2" opacity="0.9" stroke-linecap="round"/>
+    <path fill="#e9e2cf" fill-rule="evenodd" d="
+      M89 78 C77 78 70 86 70 96 C70 102 73 106 77 108 L77 114 Q77 118 81 118 L97 118 Q101 118 101 114 L101 108
+      C105 106 108 102 108 96 C108 86 101 78 89 78 Z
+      M76 97 a4.5 4 0 1 0 9 0 a4.5 4 0 1 0 -9 0 Z
+      M93 97 a4.5 4 0 1 0 9 0 a4.5 4 0 1 0 -9 0 Z
+      M89 101 L86.5 106 L91.5 106 Z
+      M82 112 h1.5 v6 h-1.5 Z M86 112 h1.5 v6 h-1.5 Z M90 112 h1.5 v6 h-1.5 Z M94 112 h1.5 v6 h-1.5 Z"/>
+    <!-- lower plates -->
+    <path d="M14 160 Q89 176 163 160 L163 200 H14 Z" fill="#1c2230"/>
+    <path d="M14 160 Q89 176 163 160" stroke="url(#gold)" stroke-width="3" fill="none"/>
+    <!-- pauldrons -->
+    <path d="M12 60 Q10 34 36 26 L58 30 Q56 52 44 62 Z" fill="url(#plate)"/>
+    <path d="M165 60 Q167 34 141 26 L119 30 Q121 52 133 62 Z" fill="url(#plate)"/>
+    <path d="M12 60 Q10 34 36 26 L58 30 Q56 52 44 62 Z" fill="none" stroke="url(#gold)" stroke-width="2.5"/>
+    <path d="M165 60 Q167 34 141 26 L119 30 Q121 52 133 62 Z" fill="none" stroke="url(#gold)" stroke-width="2.5"/>
+    <path d="M24 36 L18 26 L30 32 Z M40 30 L40 20 L48 30 Z" fill="#cfc3a4"/>
+    <path d="M152 36 L158 26 L146 32 Z M136 30 L136 20 L128 30 Z" fill="#cfc3a4"/>
+    <!-- collar -->
+    <path d="M62 26 Q89 42 116 26" stroke="#5a2b2f" stroke-width="7" fill="none"/>
+  </g>
+</svg>

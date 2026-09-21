@@ -1,0 +1,16 @@
+<!-- Hat slot: 220x150. Crown centre (110, 44), head spans x 23.5 to 196.5. -->
+<svg xmlns="http://www.w3.org/2000/svg" width="220" height="150" viewBox="0 0 220 150">
+  <!-- A rubber chicken slung over the crown: body across the head, neck and
+       head lolling down the left, legs sticking out to the right. -->
+  <g>
+    <path d="M64 62 Q110 30 158 58 Q170 66 160 76 Q110 58 70 78 Q58 74 64 62 Z" fill="#f6c9cf"/>
+    <path d="M70 66 Q110 42 152 64 Q120 54 78 72 Z" fill="#ffdfe3"/>
+    <path d="M64 62 Q46 70 42 92 Q40 108 52 112 Q62 114 62 104 Q60 88 74 76 Z" fill="#f6c9cf"/>
+    <ellipse cx="50" cy="112" rx="14" ry="12" fill="#f6c9cf"/>
+    <path d="M40 110 L26 116 L40 122 Z" fill="#f0a02a"/>
+    <path d="M52 100 Q58 92 64 100 Q66 106 58 104 Z" fill="#e2646f"/>
+    <circle cx="48" cy="106" r="2.8" fill="#3b2226"/>
+    <path d="M150 74 L168 96 M158 72 L176 88" stroke="#f0a02a" stroke-width="6" stroke-linecap="round"/>
+    <path d="M168 96 L162 104 M168 96 L176 102" stroke="#f0a02a" stroke-width="5" stroke-linecap="round"/>
+  </g>
+</svg>

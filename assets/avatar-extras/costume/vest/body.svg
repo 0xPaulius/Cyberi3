@@ -1,0 +1,16 @@
+<!--
+  Costume torso canvas: 176x200. A string vest is close-fitting, so it stays
+  inside x 12..165, y 26..200 where a normal shirt sits rather than filling the
+  roomier canvas the mascot suits use.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" width="176" height="200" viewBox="0 0 176 200">
+  <g>
+    <path d="M12 62 Q12 30 40 26 L62 26 Q89 42 116 26 L138 26 Q165 30 165 62 L165 200 H12 Z" fill="#eef0f3"/>
+    <path d="M12 62 Q12 30 40 26 L62 26 Q68 46 64 200 H12 Z" fill="#fbfcfd"/>
+    <path d="M134 30 Q157 38 157 70 L157 200 H144 L144 70 Q144 46 128 36 Z" fill="#d8dce3"/>
+    <path d="M38 78 V200 M62 86 V200 M89 90 V200 M116 86 V200 M140 78 V200"
+          stroke="#dde1e7" stroke-width="3" fill="none"/>
+    <path d="M28 108 H150 M28 142 H150 M28 176 H150" stroke="#dde1e7" stroke-width="3" fill="none"/>
+    <ellipse cx="118" cy="176" rx="19" ry="13" fill="#e4d9c4" opacity="0.75"/>
+  </g>
+</svg>

@@ -1,0 +1,8 @@
+<!-- Costume trouser: 111x166. Outline traced from the pack's own trouser leg. -->
+<svg xmlns="http://www.w3.org/2000/svg" width="111" height="166" viewBox="0 0 111 166">
+  <g>
+    <polygon fill="#e6bf85" points="56,0 80,12 84,24 88,36 92,48 95,60 98,72 101,84 104,96 106,108 108,120 109,132 110,144 104,156 102,164 40,164 38,156 38,144 37,132 36,120 35,108 33,96 30,84 27,72 23,60 19,48 12,36 4,24 8,12 39,0"/>
+    <path d="M50 18 L46 164" stroke="#f3d3a1" stroke-width="9" fill="none"/>
+    <path d="M88 30 L98 164" stroke="#cfa468" stroke-width="7" fill="none"/>
+  </g>
+</svg>

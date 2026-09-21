@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Skull">
+  <!-- One even-odd path so the eye sockets, nose and teeth gaps are true holes:
+       the file is used as a CSS mask, where only alpha counts. -->
+  <path fill="#fff" fill-rule="evenodd" d="
+    M32 3 C16.5 3 7 14 7 28.5 C7 36.5 10.6 42 16 45.5 L16 53.5 Q16 58 20.5 58 L43.5 58 Q48 58 48 53.5 L48 45.5
+    C53.4 42 57 36.5 57 28.5 C57 14 47.5 3 32 3 Z
+    M15.5 30 a6.8 5.8 0 1 0 13.6 0 a6.8 5.8 0 1 0 -13.6 0 Z
+    M34.9 30 a6.8 5.8 0 1 0 13.6 0 a6.8 5.8 0 1 0 -13.6 0 Z
+    M32 36.5 L28.2 43 L35.8 43 Z
+    M22.8 49.5 h1.8 v8.5 h-1.8 Z
+    M28.6 49.5 h1.8 v8.5 h-1.8 Z
+    M34.4 49.5 h1.8 v8.5 h-1.8 Z
+    M40.2 49.5 h1.8 v8.5 h-1.8 Z
+  "/>
+</svg>

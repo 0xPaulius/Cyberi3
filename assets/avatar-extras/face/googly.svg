@@ -1,0 +1,15 @@
+<!--
+  Face slot: 200x120, drawn over the eyes, nose and mouth.
+  Eye centres (54.5, 46.5) and (145.5, 46.5); nose (100.5, 64.5);
+  mouth centre (100, 88.5); brows around y 16 to 33.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="120" viewBox="0 0 200 120">
+  <g>
+    <circle cx="54.5" cy="46.5" r="26" fill="#fdfdfd" stroke="#c9ced6" stroke-width="2"/>
+    <circle cx="145.5" cy="46.5" r="26" fill="#fdfdfd" stroke="#c9ced6" stroke-width="2"/>
+    <circle cx="48" cy="56" r="11" fill="#141414"/>
+    <circle cx="153" cy="52" r="11" fill="#141414"/>
+    <circle cx="44" cy="52" r="3.5" fill="#fdfdfd"/>
+    <circle cx="149" cy="48" r="3.5" fill="#fdfdfd"/>
+  </g>
+</svg>

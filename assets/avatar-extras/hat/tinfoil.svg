@@ -1,0 +1,15 @@
+<!--
+  Hat slot: 220x150. Crown centre (110, 44), head spans x 23.5 to 196.5.
+  Nothing may be drawn outside the box; the slot is exactly the image, so an
+  antenna poking past y=0 is simply clipped away.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" width="220" height="150" viewBox="0 0 220 150">
+  <g>
+    <circle cx="110" cy="8" r="7" fill="#e2494f"/>
+    <path d="M110 15 L110 30" stroke="#9aa3b1" stroke-width="4"/>
+    <path d="M110 28 L128 44 L120 54 L142 68 L128 74 L150 90 H70 L92 74 L78 68 L100 54 L92 44 Z" fill="#c8cdd6"/>
+    <path d="M110 28 L128 44 L120 54 L142 68 L128 74 L150 90 H110 Z" fill="#aab1bd"/>
+    <path d="M110 30 L118 48 L106 58 L114 70 L102 78 L110 90" stroke="#e6eaf0" stroke-width="3" fill="none"/>
+    <rect x="62" y="86" width="96" height="12" rx="6" fill="#9aa3b1"/>
+  </g>
+</svg>

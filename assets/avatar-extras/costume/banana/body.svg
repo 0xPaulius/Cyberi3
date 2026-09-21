@@ -1,0 +1,17 @@
+<!--
+  Costume torso canvas: 176x200, roomier than the 153x174 shirt it replaces.
+  Landmarks in canvas coordinates: body axis x=89, neck base y=20, the neck art
+  ends at y=41, the shoulder line is y=48, and y=200 meets the hip piece. A
+  mascot suit fills the canvas; something close-fitting should stay inside
+  x 12..165, y 26..200, which is where a normal shirt sits.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" width="176" height="200" viewBox="0 0 176 200">
+  <g>
+    <path d="M6 68 Q6 32 40 30 L64 30 Q89 44 114 30 L138 30 Q170 32 170 68 L170 200 H6 Z" fill="#f5cf3f"/>
+    <path d="M6 68 Q6 32 40 30 L64 30 Q72 46 70 200 H6 Z" fill="#ffe066"/>
+    <path d="M132 34 Q160 42 160 76 L160 200 H144 L144 76 Q144 48 124 40 Z" fill="#e0b224"/>
+    <path d="M104 52 L104 200" stroke="#e6bd30" stroke-width="5" fill="none"/>
+    <path d="M46 50 L46 200" stroke="#ffe98f" stroke-width="5" fill="none"/>
+    <path d="M89 46 Q78 62 80 200" stroke="#ffe98f" stroke-width="3" fill="none"/>
+  </g>
+</svg>

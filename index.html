@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>dj.teviai.lt</title>
+    <link rel="stylesheet" href="/assets/css/avatar.css" />
+    <link rel="stylesheet" href="/assets/css/app.css" />
+  </head>
+  <body>
+    <!-- Sign in / register ------------------------------------------------- -->
+    <div class="gate" id="gate" hidden>
+      <form class="gate__card" id="authForm">
+        <h1 class="gate__title">dj<span>.teviai.lt</span></h1>
+        <p class="gate__sub">A username and a password. That's it.</p>
+
+        <label class="field">
+          <span>Username</span>
+          <input id="username" name="username" autocomplete="username" required />
+        </label>
+        <label class="field">
+          <span>Password</span>
+          <input id="password" name="password" type="password" autocomplete="current-password" required />
+        </label>
+
+        <p class="gate__error" id="authError" role="alert" hidden></p>
+
+        <button class="btn btn--primary btn--block" id="authSubmit" type="submit">Create account</button>
+        <button class="btn btn--link btn--block" id="authToggle" type="button">
+          I already have an account
+        </button>
+      </form>
+    </div>
+
+    <!-- Enter the room (needed for audio autoplay) ------------------------ -->
+    <div class="gate gate--enter" id="enterGate" hidden>
+      <div class="gate__card gate__card--center">
+        <h2 class="gate__title">Ready?</h2>
+        <p class="gate__sub">Browsers only allow sound after a click.</p>
+        <button class="btn btn--primary btn--block" id="enterRoom" type="button">Enter the room</button>
+      </div>
+    </div>
+
+    <!-- Room -------------------------------------------------------------- -->
+    <div class="app" id="app" hidden>
+      <header class="top">
+        <div class="top__brand">
+          dj<span>.teviai.lt</span>
+          <em id="roomName">the room</em>
+        </div>
+
+        <div class="now" id="now">
+          <div class="now__title" id="nowTitle">Nothing playing</div>
+          <div class="now__meta">
+            <span id="nowDj">The booth is empty</span>
+            <span class="now__time" id="nowTime"></span>
+          </div>
+          <div class="now__bar"><i id="nowProgress"></i></div>
+        </div>
+
+        <div class="top__right">
+          <div class="volume">
+            <button class="btn btn--icon" id="muteBtn" title="Mute" aria-label="Mute">
+              <svg class="ico" aria-hidden="true"><use href="/assets/img/icons.svg#volume"/></svg>
+            </button>
+            <input id="volume" type="range" min="0" max="100" value="70" aria-label="Volume" />
+          </div>
+          <div class="me">
+            <span id="meName">…</span>
+            <button class="btn btn--ghost" id="logout" type="button">
+              <svg class="ico" aria-hidden="true"><use href="/assets/img/icons.svg#leave"/></svg>
+              Sign out
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <main class="stage">
+        <div class="screen is-idle" id="screen">
+          <div class="screen__frame">
+            <div class="screen__slot" id="ytplayer-slot"><div id="ytplayer"></div></div>
+            <div class="screen__slot" id="scplayer-slot"></div>
+            <div class="screen__idle">
+              <strong>Nothing playing</strong>
+              <span>Add songs to a playlist, then join the queue.</span>
+            </div>
+          </div>
+          <p class="screen__status" id="playerStatus" hidden></p>
+        </div>
+
+        <section class="room" aria-label="Dance floor">
+          <div class="room__booth">
+            <div class="booth__dj" id="boothDj"></div>
+            <img class="booth__desk" src="/assets/img/booth-v1.webp" alt="DJ booth" />
+            <div class="booth__label" id="boothLabel">Nobody is playing</div>
+          </div>
+          <div class="room__floor" id="floor"></div>
+        </section>
+
+        <div class="controls">
+          <div class="controls__votes">
+            <button class="btn btn--vote btn--woot" id="wootBtn" type="button" disabled>
+              <img class="btn__art" src="/assets/img/vote-woot-v1.png" alt="" draggable="false" />
+              Woot <b id="wootCount">0</b>
+            </button>
+            <button class="btn btn--vote btn--meh" id="mehBtn" type="button" disabled>
+              <img class="btn__art" src="/assets/img/vote-meh-v1.png" alt="" draggable="false" />
+              Meh <b id="mehCount">0</b>
+            </button>
+            <button class="btn btn--vote btn--grab" id="grabBtn" type="button" disabled>
+              <img class="btn__art" src="/assets/img/vote-grab-v1.png" alt="" draggable="false" />
+              Grab <b id="grabCount">0</b>
+            </button>
+          </div>
+          <label class="bpm" title="How fast your avatar dances. Everyone in the room sees it.">
+            <i class="bpm__pulse" aria-hidden="true"></i>
+            <span class="bpm__label">BPM</span>
+            <input id="bpmRange" type="range" min="60" max="300" step="1" value="120" aria-label="Dance tempo in BPM" />
+            <output class="bpm__value" id="bpmValue" for="bpmRange">120</output>
+          </label>
+          <div class="controls__dj">
+            <button class="btn btn--ghost" id="skipBtn" type="button" hidden>
+              <svg class="ico" aria-hidden="true"><use href="/assets/img/icons.svg#skip"/></svg>
+              Skip my song
+            </button>
+            <button class="btn btn--primary" id="queueBtn" type="button">
+              <svg class="ico" aria-hidden="true"><use href="/assets/img/icons.svg#queue"/></svg>
+              <span id="queueBtnText">Join the queue</span>
+            </button>
+          </div>
+        </div>
+      </main>
+
+      <aside class="side">
+        <nav class="tabs" role="tablist">
+          <button class="tab is-active" data-tab="chat" role="tab">Chat</button>
+          <button class="tab" data-tab="playlists" role="tab">Playlists</button>
+          <button class="tab" data-tab="queue" role="tab">Queue</button>
+          <button class="tab" data-tab="avatar" role="tab">Avatar</button>
+        </nav>
+
+        <!-- chat -->
+        <section class="panel is-active" data-panel="chat">
+          <div class="chat" id="chatLog" aria-live="polite"></div>
+          <form class="chat__form" id="chatForm">
+            <input id="chatInput" placeholder="Say something…" maxlength="300" autocomplete="off" />
+            <button class="btn btn--primary btn--icon" type="submit" title="Send" aria-label="Send">
+              <svg class="ico" aria-hidden="true"><use href="/assets/img/icons.svg#send"/></svg>
+            </button>
+          </form>
+        </section>
+
+        <!-- playlists -->
+        <section class="panel" data-panel="playlists">
+          <div class="pl">
+            <div class="pl__head">
+              <select id="playlistSelect" aria-label="Playlist"></select>
+              <button class="btn btn--icon" id="playlistNew" title="New playlist" aria-label="New playlist">
+                <svg class="ico" aria-hidden="true"><use href="/assets/img/icons.svg#plus"/></svg>
+              </button>
+              <button class="btn btn--icon" id="playlistRename" title="Rename" aria-label="Rename">
+                <svg class="ico" aria-hidden="true"><use href="/assets/img/icons.svg#edit"/></svg>
+              </button>
+              <button class="btn btn--icon" id="playlistDelete" title="Delete" aria-label="Delete">
+                <svg class="ico" aria-hidden="true"><use href="/assets/img/icons.svg#trash"/></svg>
+              </button>
+            </div>
+            <button class="btn btn--ghost btn--block" id="playlistActivate" type="button">
+              <svg class="ico" aria-hidden="true"><use href="/assets/img/icons.svg#star"/></svg>
+              <span id="playlistActivateText">Use this playlist when I DJ</span>
+            </button>
+            <div class="pl__tools">
+              <button class="btn btn--ghost" id="playlistImport" type="button"
+                title="Add every track from a YouTube or SoundCloud playlist link">
+                <svg class="ico" aria-hidden="true"><use href="/assets/img/icons.svg#import"/></svg>
+                Import playlist
+              </button>
+              <button class="btn btn--ghost" id="playlistShuffle" type="button" title="Put the tracks in random order">
+                <svg class="ico" aria-hidden="true"><use href="/assets/img/icons.svg#shuffle"/></svg>
+                Shuffle
+              </button>
+            </div>
+
+            <form class="pl__search" id="searchForm">
+              <input
+                id="searchInput"
+                placeholder="Search YouTube and SoundCloud, or paste a track or playlist link…"
+                autocomplete="off"
+              />
+              <button class="btn btn--primary btn--icon" type="submit" title="Find" aria-label="Find">
+                <svg class="ico" aria-hidden="true"><use href="/assets/img/icons.svg#search"/></svg>
+              </button>
+            </form>
+
+            <div class="pl__results" id="searchResults" hidden></div>
+            <ol class="pl__tracks" id="trackList"></ol>
+          </div>
+        </section>
+
+        <!-- queue -->
+        <section class="panel" data-panel="queue">
+          <h3 class="panel__title">In the booth</h3>
+          <div id="queueDj" class="queue__dj">Nobody</div>
+          <h3 class="panel__title">Waiting to play</h3>
+          <ol class="queue" id="queueList"></ol>
+          <h3 class="panel__title">Recently played</h3>
+          <ol class="history" id="historyList"></ol>
+        </section>
+
+        <!-- avatar -->
+        <section class="panel" data-panel="avatar">
+          <div class="picker">
+            <div class="picker__preview" id="avatarPreview"></div>
+            <div class="picker__controls" id="avatarControls"></div>
+            <div class="picker__actions">
+              <button class="btn btn--ghost" id="avatarRandom" type="button">
+                <svg class="ico" aria-hidden="true"><use href="/assets/img/icons.svg#dice"/></svg>
+                Randomize
+              </button>
+              <button class="btn btn--primary" id="avatarSave" type="button">
+                <svg class="ico" aria-hidden="true"><use href="/assets/img/icons.svg#check"/></svg>
+                Save look
+              </button>
+            </div>
+          </div>
+        </section>
+      </aside>
+
+      <div class="toasts" id="toasts" aria-live="polite"></div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script type="module" src="/assets/js/app.js"></script>
+  </body>
+</html>

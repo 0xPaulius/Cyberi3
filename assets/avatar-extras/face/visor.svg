@@ -1,0 +1,25 @@
+<!-- Face slot: 200x120. Eye centres (54.5, 46.5) and (145.5, 46.5).
+     A wraparound chrome visor, mirrored, with a cyan reflection across it. -->
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="120" viewBox="0 0 200 120">
+  <defs>
+    <linearGradient id="chrome" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="0.38" stop-color="#cfe6f7"/>
+      <stop offset="0.5" stop-color="#5f7f99"/>
+      <stop offset="0.62" stop-color="#dcefff"/>
+      <stop offset="1" stop-color="#ffffff"/>
+    </linearGradient>
+    <linearGradient id="reflect" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#3fe0ff" stop-opacity="0"/>
+      <stop offset="0.45" stop-color="#3fe0ff" stop-opacity="0.55"/>
+      <stop offset="0.55" stop-color="#ff9ee8" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#3fe0ff" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <g>
+    <path d="M8 44 Q100 20 192 44 L192 62 Q100 86 8 62 Z" fill="url(#chrome)"/>
+    <path d="M8 44 Q100 20 192 44 L192 62 Q100 86 8 62 Z" fill="url(#reflect)"/>
+    <path d="M8 44 Q100 20 192 44 L192 62 Q100 86 8 62 Z" fill="none" stroke="#2b3a4c" stroke-width="2.5"/>
+    <path d="M24 46 Q100 28 176 46" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.9"/>
+  </g>
+</svg>

@@ -1,0 +1,27 @@
+<!-- Hat slot: 220x150. Crown centre (110, 44), head spans x 23.5 to 196.5.
+     A warlock's hood. The opening is cut as a hole so the face shows through;
+     the canvas bottom lands just above the chin, so the hood drapes to it. -->
+<svg xmlns="http://www.w3.org/2000/svg" width="220" height="150" viewBox="0 0 220 150">
+  <defs>
+    <linearGradient id="cloth" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1c2540"/>
+      <stop offset="1" stop-color="#090d18"/>
+    </linearGradient>
+  </defs>
+  <g>
+    <path fill="url(#cloth)" fill-rule="evenodd" d="
+      M30 150 L22 94 C20 40 60 14 110 8 C160 14 200 40 198 94 L190 150 Z
+      M60 150 L56 92 C58 62 80 50 110 48 C140 50 162 62 164 92 L160 150 Z"/>
+    <!-- folds -->
+    <g stroke="#2c3a5e" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.9">
+      <path d="M40 60 C46 90 42 120 38 148"/>
+      <path d="M180 60 C174 90 178 120 182 148"/>
+      <path d="M110 12 C104 22 98 34 96 48"/>
+    </g>
+    <!-- rune trim along the opening -->
+    <path d="M58 150 L54 92 C56 60 80 48 110 46 C140 48 164 60 166 92 L162 150"
+          stroke="#3fe0ff" stroke-width="2.5" fill="none" stroke-dasharray="6 5" opacity="0.85"/>
+    <path d="M58 150 L54 92 C56 60 80 48 110 46 C140 48 164 60 166 92 L162 150"
+          stroke="#3fe0ff" stroke-width="7" fill="none" opacity="0.18"/>
+  </g>
+</svg>

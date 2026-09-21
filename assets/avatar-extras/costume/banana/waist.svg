@@ -1,0 +1,12 @@
+<!--
+  Costume hip canvas: 176x54, matching the width of body.svg. The bottom edge
+  arcs up at x=88 so the legs come out either side of it.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" width="176" height="54" viewBox="0 0 176 54">
+  <g>
+    <path d="M6 0 H170 V34 Q158 54 130 54 Q100 54 88 32 Q76 54 46 54 Q18 54 6 34 Z" fill="#f5cf3f"/>
+    <path d="M6 0 H70 Q66 30 50 54 Q18 54 6 34 Z" fill="#ffe066"/>
+    <path d="M144 0 Q160 18 160 54 H146 Q146 24 132 2 Z" fill="#e0b224"/>
+    <path d="M70 44 Q88 24 106 44" stroke="#6b4a1c" stroke-width="8" fill="none" stroke-linecap="round"/>
+  </g>
+</svg>

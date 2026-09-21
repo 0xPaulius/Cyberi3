@@ -1,0 +1,13 @@
+<!-- Hat slot: 220x150. Crown centre (110, 44), head spans x 23.5 to 196.5. -->
+<svg xmlns="http://www.w3.org/2000/svg" width="220" height="150" viewBox="0 0 220 150">
+  <!-- Worn backwards: the peak points off to the left. -->
+  <g>
+    <path d="M40 82 Q34 74 44 70 L72 66 L74 84 Z" fill="#2f6fb5"/>
+    <path d="M66 84 Q64 34 110 32 Q156 34 154 84 Z" fill="#3a86d6"/>
+    <path d="M110 32 Q156 34 154 84 H110 Z" fill="#2f6fb5"/>
+    <rect x="64" y="78" width="92" height="12" rx="6" fill="#2a63a4"/>
+    <circle cx="110" cy="34" r="6" fill="#f5f1e6"/>
+    <path d="M92 84 Q96 48 110 40" stroke="#5a9fe4" stroke-width="3" fill="none"/>
+    <path d="M128 84 Q124 48 110 40" stroke="#2a63a4" stroke-width="3" fill="none"/>
+  </g>
+</svg>

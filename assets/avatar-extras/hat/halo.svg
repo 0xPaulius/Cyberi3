@@ -1,0 +1,30 @@
+<!-- Hat slot: 220x150. Crown centre (110, 44), head spans x 23.5 to 196.5.
+     A glossy aqua ring floating above the head, with a couple of bubbles. -->
+<svg xmlns="http://www.w3.org/2000/svg" width="220" height="150" viewBox="0 0 220 150">
+  <defs>
+    <linearGradient id="ring" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#bff4ff"/>
+      <stop offset="0.5" stop-color="#3fe0ff"/>
+      <stop offset="1" stop-color="#1f8cff"/>
+    </linearGradient>
+    <filter id="soft" x="-30%" y="-60%" width="160%" height="220%">
+      <feGaussianBlur stdDeviation="5"/>
+    </filter>
+  </defs>
+  <g>
+    <ellipse cx="110" cy="20" rx="64" ry="15" fill="none" stroke="#3fe0ff" stroke-width="14" opacity="0.45" filter="url(#soft)"/>
+    <ellipse cx="110" cy="20" rx="64" ry="15" fill="none" stroke="url(#ring)" stroke-width="9"/>
+    <path d="M58 14 Q84 0 128 4" stroke="#fff" stroke-width="3.5" fill="none" stroke-linecap="round" opacity="0.9"/>
+    <ellipse cx="110" cy="20" rx="64" ry="15" fill="none" stroke="#0b5f7a" stroke-width="1.5" opacity="0.5"/>
+    <!-- bubbles -->
+    <g fill="none" stroke="#c8f5ff" stroke-width="2" opacity="0.85">
+      <circle cx="36" cy="54" r="7"/>
+      <circle cx="190" cy="40" r="5"/>
+      <circle cx="176" cy="66" r="3.5"/>
+    </g>
+    <g fill="#fff" opacity="0.9">
+      <circle cx="33" cy="51" r="2"/>
+      <circle cx="188" cy="38" r="1.5"/>
+    </g>
+  </g>
+</svg>

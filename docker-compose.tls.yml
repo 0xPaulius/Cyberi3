@@ -1,0 +1,42 @@
+# Puts Caddy in front of the app to terminate TLS. Used on the live server:
+#
+#   docker compose -f docker-compose.yml -f docker-compose.tls.yml up -d
+#
+# Plain `docker compose up -d` still runs the app on its own over HTTP, so
+# local use needs no certificates and no public IP.
+services:
+  plugdj:
+    # Caddy owns 80 and 443 and reaches the app over the compose network, so
+    # the app must stop publishing a host port or the two would collide.
+    ports: !reset []
+
+  caddy:
+    image: caddy:2-alpine
+    container_name: plugdj-caddy
+    restart: unless-stopped
+    depends_on:
+      - plugdj
+    environment:
+      # A hostname, never the bare IP: YouTube will not authorise label-owned
+      # videos for a page whose origin is an IP address.
+      SITE_HOST: ${SITE_HOST:?set SITE_HOST to the public hostname}
+    ports:
+      # 443 only. Cloudflare reaches this origin over HTTPS, and the internal
+      # certificate needs no ACME challenge, so port 80 has no work to do and
+      # publishing it would just serve the bare IP to anyone who asked.
+      - '443:443'
+    volumes:
+      # The directory is mounted rather than the Caddyfile itself. A single-file
+      # bind mount pins one inode, and rsync deploys by writing a temp file and
+      # renaming it, so the container would silently keep reading the original
+      # file forever while every config change appeared to be ignored.
+      - ./caddy:/etc/caddy:ro
+      # The certificate and ACME account survive restarts here. Without this a
+      # redeploy would ask Let's Encrypt for a fresh certificate every time and
+      # quickly hit their rate limits.
+      - caddy-data:/data
+      - caddy-config:/config
+
+volumes:
+  caddy-data:
+  caddy-config:

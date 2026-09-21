@@ -1,0 +1,25 @@
+<!-- Face slot: 200x120. Eye centres (54.5, 46.5) and (145.5, 46.5); the mouth
+     sits around y 82..112. Sugar-skull paint: a pale wash with the eyes left
+     open, dark sockets, a nose hollow and painted teeth over the mouth. -->
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="120" viewBox="0 0 200 120">
+  <g>
+    <path fill="#f4f1ea" fill-opacity="0.62" fill-rule="evenodd" d="
+      M100 2 C150 2 182 30 182 66 C182 96 152 118 100 118 C48 118 18 96 18 66 C18 30 50 2 100 2 Z
+      M54.5 22 A24 22 0 1 0 54.6 22 Z
+      M145.5 22 A24 22 0 1 0 145.6 22 Z"/>
+    <ellipse cx="54.5" cy="46.5" rx="27" ry="25" fill="none" stroke="#161020" stroke-width="9" opacity="0.9"/>
+    <ellipse cx="145.5" cy="46.5" rx="27" ry="25" fill="none" stroke="#161020" stroke-width="9" opacity="0.9"/>
+    <path d="M100 58 L91 80 L109 80 Z" fill="#161020" opacity="0.85"/>
+    <!-- teeth -->
+    <path d="M62 92 Q100 84 138 92 Q100 118 62 92 Z" fill="#f7f4ee" opacity="0.9"/>
+    <path d="M62 92 Q100 84 138 92" stroke="#161020" stroke-width="3" fill="none"/>
+    <path d="M62 92 Q100 118 138 92" stroke="#161020" stroke-width="3" fill="none"/>
+    <g stroke="#161020" stroke-width="2.5" stroke-linecap="round">
+      <path d="M74 91 L76 101"/>
+      <path d="M87 88 L88 106"/>
+      <path d="M100 87 L100 108"/>
+      <path d="M113 88 L112 106"/>
+      <path d="M126 91 L124 101"/>
+    </g>
+  </g>
+</svg>

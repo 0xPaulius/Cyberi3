@@ -1,0 +1,660 @@
+/* Avatar rig: layout, joints and animation.
+ *
+ * All artwork lives in one 420x620 coordinate space. Bones are full-stage
+ * transparent layers whose transform-origin sits on a joint, so rotating a bone
+ * swings its children around that joint without any per-part math. */
+
+.av {
+  --av-scale: 0.3;
+  --av-offset: 0s;
+  /* Every animation runs off the dancer's tempo. A move declares how many
+   * beats one cycle takes (--av-cycle) and the rig turns that into seconds, so
+   * a headbang is one nod per beat at any BPM and a sway takes three. The JS
+   * sets --av-bpm per avatar; 120 is what the moves were tuned at. */
+  --av-bpm: 120;
+  --av-cycle: 2;
+  --av-beat: calc(var(--av-cycle) * 60s / var(--av-bpm));
+
+  /* Joints, in stage coordinates. Offsets below come from measuring the opaque
+   * bounds of the artwork: the leg's own axis sits at x=38 of its 93px image,
+   * the arm's shoulder nub at (6,0) and its wrist at (140,128). */
+  --neck-x: 260px;
+  --neck-y: 178px;
+  /* Limbs are authored on the right; the left side mirrors about --hip-c-x. */
+  --shoulder-r-x: 316px;
+  --shoulder-y: 206px;
+  --hip-c-x: 260px;
+  --hip-c-y: 372px;
+  --hip-r-x: 295px;
+  --hip-y: 378px;
+  --ankle-y: 534px;
+
+  position: relative;
+  width: calc(520px * var(--av-scale));
+  height: calc(620px * var(--av-scale));
+  flex: none;
+}
+
+.av__stage {
+  position: absolute;
+  inset: 0;
+  width: 520px;
+  height: 620px;
+  transform: scale(var(--av-scale));
+  transform-origin: top left;
+  pointer-events: none;
+}
+
+/* Every bone covers the stage so its children keep stage coordinates. */
+.av__body,
+.av__legs,
+.av__leg,
+.av__leg-bone,
+.av__shoe,
+.av__torso,
+.av__arm,
+.av__arm-bone,
+.av__hand,
+.av__head,
+.av__face {
+  position: absolute;
+  inset: 0;
+}
+
+.av img {
+  position: absolute;
+  image-rendering: auto;
+  user-select: none;
+}
+
+.av__body {
+  transform-origin: var(--hip-c-x) 620px;
+}
+
+/* --- legs ---------------------------------------------------------------- */
+
+/* Limb art is always authored on the right-hand side; the left limb is the same
+ * layer mirrored about the body centre. So both sides share one set of
+ * coordinates and stay symmetric by construction. */
+
+.av__leg-bone {
+  transform-origin: var(--hip-r-x) var(--hip-y);
+}
+
+.av__leg-skin {
+  left: calc(var(--hip-r-x) - 38px);
+  top: var(--hip-y);
+}
+.av__leg-trouser {
+  left: calc(var(--hip-r-x) - 40px);
+  top: calc(var(--hip-y) - 2px);
+}
+
+.av__leg.is-left {
+  transform: scaleX(-1);
+  transform-origin: var(--hip-c-x) var(--hip-y);
+}
+
+.av__shoe {
+  transform-origin: var(--hip-r-x) var(--ankle-y);
+}
+.av__shoe-img {
+  left: calc(var(--hip-r-x) - 44px);
+  top: var(--ankle-y);
+  /* The source shoe points toward the body; flip it so toes face outward.
+   * The ankle sits near the image centre, so this barely shifts the join. */
+  transform: scaleX(-1);
+}
+
+.av__waist {
+  left: calc(var(--hip-c-x) - 77px);
+  top: calc(var(--hip-c-y) - 14px);
+}
+
+/* A costume gets a roomier canvas than the shirt and trousers it replaces, so
+ * a padded mascot suit can sit wider than a body while a vest stays trim. Each
+ * costume decides how much of the canvas to fill. */
+.av__shirt--costume {
+  width: 176px;
+  height: 200px;
+  left: calc(var(--hip-c-x) - 89px);
+  top: calc(var(--hip-c-y) - 214px);
+}
+.av__waist--costume {
+  width: 176px;
+  height: 54px;
+  left: calc(var(--hip-c-x) - 89px);
+  top: calc(var(--hip-c-y) - 14px);
+}
+
+/* --- torso, arms -------------------------------------------------------- */
+
+.av__torso {
+  transform-origin: var(--hip-c-x) var(--hip-c-y);
+}
+
+.av__shirt {
+  left: calc(var(--hip-c-x) - 77px);
+  top: calc(var(--shoulder-y) - 22px);
+}
+
+.av__arm-bone {
+  transform-origin: var(--shoulder-r-x) var(--shoulder-y);
+}
+.av__arm-skin {
+  left: calc(var(--shoulder-r-x) - 6px);
+  top: var(--shoulder-y);
+}
+.av__arm-sleeve {
+  left: calc(var(--shoulder-r-x) - 7px);
+  top: calc(var(--shoulder-y) - 3px);
+}
+.av__hand {
+  transform-origin: calc(var(--shoulder-r-x) + 134px) calc(var(--shoulder-y) + 126px);
+}
+.av__hand-skin {
+  left: calc(var(--shoulder-r-x) + 106px);
+  top: calc(var(--shoulder-y) + 116px);
+}
+
+/* Mirroring the whole left arm layer about the body centre turns the
+ * right-arm artwork into a left arm, and flips its rotations to match. */
+.av__arm.is-left {
+  transform: scaleX(-1);
+  transform-origin: var(--hip-c-x) var(--shoulder-y);
+}
+
+/* --- head, face --------------------------------------------------------- */
+
+.av__neck {
+  left: calc(var(--neck-x) - 48px);
+  top: calc(var(--neck-y) - 16px);
+}
+
+.av__head {
+  transform-origin: var(--neck-x) var(--neck-y);
+}
+.av__head-skin {
+  left: calc(var(--neck-x) - 87px);
+  top: calc(var(--neck-y) - 168px);
+}
+.av__hair {
+  left: calc(var(--neck-x) - 80px);
+  top: calc(var(--neck-y) - 182px);
+}
+
+/* Joke layers. Both are authored against the head, so they ride inside the
+ * head bone and lean with it. The hat canvas is 220x150 with the crown at
+ * (110, 44); the face canvas is 200x120 covering brows down to mouth. */
+/* The hat canvas is drawn at 220x150 but worn at 1.45x, which is what makes a
+ * hat read as wide as the 173px head instead of perching on it like a badge. */
+.av__hat {
+  width: 319px;
+  height: 218px;
+  left: calc(var(--neck-x) - 160px);
+  top: calc(var(--neck-y) - 245px);
+}
+.av__face-extra {
+  left: calc(var(--neck-x) - 100px);
+  top: calc(var(--neck-y) - 128px);
+}
+
+.av__brow {
+  top: calc(var(--neck-y) - 112px);
+}
+.av__brow.is-left {
+  left: calc(var(--neck-x) - 66px);
+  transform: scaleX(-1);
+}
+.av__brow.is-right {
+  left: calc(var(--neck-x) + 26px);
+}
+
+.av__eye {
+  top: calc(var(--neck-y) - 92px);
+}
+.av__eye.is-left {
+  left: calc(var(--neck-x) - 56px);
+}
+.av__eye.is-right {
+  left: calc(var(--neck-x) + 35px);
+}
+
+.av__nose {
+  left: calc(var(--neck-x) - 15px);
+  top: calc(var(--neck-y) - 74px);
+}
+
+.av__mouth {
+  left: calc(var(--neck-x) - 17px);
+  top: calc(var(--neck-y) - 46px);
+}
+
+.av__fallback-art {
+  position: absolute;
+  inset: 0;
+  width: 520px;
+  height: 620px;
+}
+
+/* --- aura ---------------------------------------------------------------- */
+
+/* A pool of light under the feet (which end at y 576), a ring floating in it,
+ * and three sparks drifting up through the figure. Everything breathes on the
+ * dancer's own beat so it reads as part of the dance rather than a sticker. */
+.av__aura {
+  --aura: #3fe0ff;
+  position: absolute;
+  top: 480px;
+  left: 100px;
+  width: 320px;
+  height: 150px;
+  pointer-events: none;
+}
+.av__aura--frost { --aura: #3fe0ff; }
+.av__aura--ember { --aura: #ff7a3d; }
+.av__aura--void  { --aura: #b07cff; }
+.av__aura--holy  { --aura: #f5c85a; }
+
+.av__aura::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(
+    closest-side,
+    color-mix(in srgb, var(--aura) 55%, transparent),
+    color-mix(in srgb, var(--aura) 14%, transparent) 60%,
+    transparent
+  );
+  animation: av-aura-pulse var(--av-beat) ease-in-out infinite;
+  animation-delay: var(--av-offset);
+}
+.av__aura::after {
+  content: '';
+  position: absolute;
+  inset: 44px 34px 30px;
+  border: 3px solid color-mix(in srgb, var(--aura) 75%, #fff);
+  border-radius: 50%;
+  box-shadow:
+    0 0 18px var(--aura),
+    inset 0 0 22px color-mix(in srgb, var(--aura) 45%, transparent);
+  opacity: 0.85;
+  animation: av-aura-ring calc(var(--av-beat) * 2) ease-in-out infinite;
+  animation-delay: var(--av-offset);
+}
+.av__aura i {
+  position: absolute;
+  bottom: 60px;
+  left: 155px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 12px 4px var(--aura);
+  opacity: 0;
+  animation: av-aura-spark calc(var(--av-beat) * 4) linear infinite;
+}
+.av__aura i:nth-child(1) { --dx: -82px; animation-delay: var(--av-offset); }
+.av__aura i:nth-child(2) { --dx: 14px;  animation-delay: calc(var(--av-offset) - var(--av-beat) * 1.3); }
+.av__aura i:nth-child(3) { --dx: 96px;  animation-delay: calc(var(--av-offset) - var(--av-beat) * 2.6); }
+
+@keyframes av-aura-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.85; }
+  50%      { transform: scale(1.08); opacity: 1; }
+}
+@keyframes av-aura-ring {
+  0%, 100% { transform: translateY(0) scaleX(1); }
+  50%      { transform: translateY(-10px) scaleX(0.94); }
+}
+@keyframes av-aura-spark {
+  0%   { opacity: 0; transform: translate(var(--dx), 0) scale(0.6); }
+  15%  { opacity: 1; }
+  100% { opacity: 0; transform: translate(calc(var(--dx) * 0.6), -470px) scale(1.1); }
+}
+
+/* ======================================================================== */
+/* Animation                                                                */
+/* ======================================================================== */
+
+.av[data-anim] .av__body,
+.av[data-anim] .av__torso,
+.av[data-anim] .av__head,
+.av[data-anim] .av__arm-bone,
+.av[data-anim] .av__hand,
+.av[data-anim] .av__leg-bone {
+  animation-duration: var(--av-beat);
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+  animation-delay: var(--av-offset);
+}
+
+/* --- idle: still, used between tracks ---------------------------------- */
+
+.av[data-anim='idle'] .av__body,
+.av[data-anim='idle'] .av__torso,
+.av[data-anim='idle'] .av__head,
+.av[data-anim='idle'] .av__arm-bone,
+.av[data-anim='idle'] .av__hand,
+.av[data-anim='idle'] .av__leg-bone {
+  animation: none;
+}
+
+/* --- bob ---------------------------------------------------------------- */
+
+@keyframes av-bob-body {
+  0%, 100% { transform: translateY(-6px) scaleY(1.02); }
+  50%      { transform: translateY(20px) scaleY(0.96); }
+}
+@keyframes av-bob-torso {
+  0%, 100% { transform: translateY(0) rotate(-2deg); }
+  50%      { transform: translateY(-8px) rotate(4deg); }
+}
+@keyframes av-bob-head {
+  0%, 100% { transform: rotate(-8deg); }
+  50%      { transform: rotate(10deg); }
+}
+/* Arm angles are relative to the artwork's rest pose, where the wrist sits 43
+ * degrees below horizontal. So -43deg is straight out, -133deg is straight up,
+ * and +47deg hangs straight down. */
+@keyframes av-bob-arm {
+  0%, 100% { transform: rotate(0deg); }
+  50%      { transform: rotate(44deg); }
+}
+@keyframes av-bob-leg {
+  0%, 100% { transform: rotate(3deg); }
+  50%      { transform: rotate(-8deg); }
+}
+
+.av[data-anim='bob'] .av__body { animation-name: av-bob-body; }
+.av[data-anim='bob'] .av__torso { animation-name: av-bob-torso; }
+.av[data-anim='bob'] .av__head { animation-name: av-bob-head; }
+.av[data-anim='bob'] .av__arm-bone { animation-name: av-bob-arm; }
+.av[data-anim='bob'] .av__leg-bone { animation-name: av-bob-leg; }
+.av[data-anim='bob'] .av__arm.is-right .av__arm-bone { animation-direction: reverse; }
+
+/* --- sway --------------------------------------------------------------- */
+
+@keyframes av-sway-body {
+  0%, 100% { transform: translateX(-24px) rotate(-5deg); }
+  50%      { transform: translateX(24px) rotate(5deg); }
+}
+@keyframes av-sway-torso {
+  0%, 100% { transform: rotate(9deg); }
+  50%      { transform: rotate(-9deg); }
+}
+@keyframes av-sway-head {
+  0%, 100% { transform: rotate(16deg); }
+  50%      { transform: rotate(-16deg); }
+}
+@keyframes av-sway-arm-a {
+  0%, 100% { transform: rotate(-40deg); }
+  50%      { transform: rotate(50deg); }
+}
+
+.av[data-anim='sway'] { --av-cycle: 3; }
+.av[data-anim='sway'] .av__body { animation-name: av-sway-body; }
+.av[data-anim='sway'] .av__torso { animation-name: av-sway-torso; }
+.av[data-anim='sway'] .av__head { animation-name: av-sway-head; }
+.av[data-anim='sway'] .av__arm-bone { animation-name: av-sway-arm-a; }
+.av[data-anim='sway'] .av__arm.is-right .av__arm-bone { animation-direction: reverse; }
+
+/* --- hands up ----------------------------------------------------------- */
+
+@keyframes av-handsup-arm {
+  0%, 100% { transform: rotate(-84deg); }
+  50%      { transform: rotate(-132deg); }
+}
+@keyframes av-handsup-hand {
+  0%, 100% { transform: rotate(24deg); }
+  50%      { transform: rotate(-30deg); }
+}
+@keyframes av-handsup-body {
+  0%, 100% { transform: translateY(12px) scaleY(0.97); }
+  50%      { transform: translateY(-16px) scaleY(1.03); }
+}
+
+.av[data-anim='handsup'] { --av-cycle: 1.5; }
+.av[data-anim='handsup'] .av__body { animation-name: av-handsup-body; }
+.av[data-anim='handsup'] .av__torso { animation-name: av-bob-torso; }
+.av[data-anim='handsup'] .av__head { animation-name: av-bob-head; }
+.av[data-anim='handsup'] .av__arm-bone { animation-name: av-handsup-arm; }
+.av[data-anim='handsup'] .av__hand { animation-name: av-handsup-hand; }
+.av[data-anim='handsup'] .av__leg-bone { animation-name: av-bob-leg; }
+
+/* --- twist -------------------------------------------------------------- */
+
+@keyframes av-twist-torso {
+  0%, 100% { transform: rotate(-14deg) scaleX(0.86); }
+  50%      { transform: rotate(14deg) scaleX(1.08); }
+}
+@keyframes av-twist-legs {
+  0%, 100% { transform: rotate(10deg); }
+  50%      { transform: rotate(-10deg); }
+}
+@keyframes av-twist-arm {
+  0%, 100% { transform: rotate(-70deg); }
+  50%      { transform: rotate(-18deg); }
+}
+
+.av[data-anim='twist'] { --av-cycle: 2; }
+.av[data-anim='twist'] .av__torso { animation-name: av-twist-torso; }
+.av[data-anim='twist'] .av__leg-bone { animation-name: av-twist-legs; }
+.av[data-anim='twist'] .av__arm-bone { animation-name: av-twist-arm; }
+.av[data-anim='twist'] .av__head { animation-name: av-bob-head; }
+
+/* --- jump --------------------------------------------------------------- */
+
+@keyframes av-jump-body {
+  0%   { transform: translateY(24px) scaleY(0.88) scaleX(1.06); }
+  20%  { transform: translateY(-60px) scaleY(1.08) scaleX(0.96); }
+  50%  { transform: translateY(-76px) scaleY(1.02) scaleX(1); }
+  82%  { transform: translateY(18px) scaleY(0.92) scaleX(1.04); }
+  100% { transform: translateY(24px) scaleY(0.88) scaleX(1.06); }
+}
+@keyframes av-jump-leg {
+  0%, 100% { transform: rotate(6deg); }
+  40%      { transform: rotate(-34deg); }
+}
+@keyframes av-jump-arm {
+  0%, 100% { transform: rotate(40deg); }
+  40%      { transform: rotate(-130deg); }
+}
+
+.av[data-anim='jump'] { --av-cycle: 2; }
+.av[data-anim='jump'] .av__body { animation-name: av-jump-body; }
+.av[data-anim='jump'] .av__leg-bone { animation-name: av-jump-leg; }
+.av[data-anim='jump'] .av__arm-bone { animation-name: av-jump-arm; }
+.av[data-anim='jump'] .av__head { animation-name: av-bob-head; }
+
+/* --- headbang ----------------------------------------------------------- */
+
+/* The nod snaps down and floats back: a headbang is a hit, not a wave. */
+@keyframes av-headbang-head {
+  0%, 100% { transform: rotate(-30deg); }
+  40%      { transform: rotate(44deg); }
+  55%      { transform: rotate(40deg); }
+}
+@keyframes av-headbang-torso {
+  0%, 100% { transform: rotate(-4deg) translateY(-4px); }
+  40%      { transform: rotate(14deg) translateY(14px); }
+}
+@keyframes av-headbang-arm-horns {
+  0%, 100% { transform: rotate(-126deg); }
+  40%      { transform: rotate(-80deg); }
+}
+
+.av[data-anim='headbang'] { --av-cycle: 1; }
+.av[data-anim='headbang'] .av__head { animation-name: av-headbang-head; }
+.av[data-anim='headbang'] .av__torso { animation-name: av-headbang-torso; }
+.av[data-anim='headbang'] .av__body { animation-name: av-bob-body; }
+.av[data-anim='headbang'] .av__arm.is-right .av__arm-bone {
+  animation-name: av-headbang-arm-horns;
+}
+.av[data-anim='headbang'] .av__arm.is-left .av__arm-bone {
+  animation-name: av-bob-arm;
+}
+
+/* ======================================================================== */
+/* DJ animations: played behind the decks                                   */
+/* ======================================================================== */
+
+/* --- scratch: front hand works the platter ----------------------------- */
+
+@keyframes av-scratch-arm {
+  0%, 100% { transform: rotate(36deg); }
+  50%      { transform: rotate(72deg); }
+}
+@keyframes av-scratch-hand {
+  0%, 100% { transform: rotate(-36deg); }
+  50%      { transform: rotate(30deg); }
+}
+@keyframes av-scratch-torso {
+  0%, 100% { transform: rotate(0deg) translateY(0); }
+  50%      { transform: rotate(10deg) translateY(12px); }
+}
+
+.av[data-anim='scratch'] { --av-cycle: 1; }
+.av[data-anim='scratch'] .av__torso { animation-name: av-scratch-torso; }
+.av[data-anim='scratch'] .av__head { animation-name: av-bob-head; }
+.av[data-anim='scratch'] .av__arm.is-right .av__arm-bone { animation-name: av-scratch-arm; }
+.av[data-anim='scratch'] .av__arm.is-right .av__hand { animation-name: av-scratch-hand; }
+.av[data-anim='scratch'] .av__arm.is-left .av__arm-bone {
+  animation: none;
+  transform: rotate(38deg);
+}
+
+/* --- mix: both hands on the faders ------------------------------------- */
+
+@keyframes av-mix-arm-a {
+  0%, 100% { transform: rotate(26deg); }
+  50%      { transform: rotate(62deg); }
+}
+@keyframes av-mix-body {
+  0%, 100% { transform: translateX(-14px) rotate(-2deg); }
+  50%      { transform: translateX(14px) rotate(2deg); }
+}
+
+.av[data-anim='mix'] { --av-cycle: 2; }
+.av[data-anim='mix'] .av__body { animation-name: av-mix-body; }
+.av[data-anim='mix'] .av__torso { animation-name: av-bob-torso; }
+.av[data-anim='mix'] .av__head { animation-name: av-bob-head; }
+.av[data-anim='mix'] .av__arm-bone { animation-name: av-mix-arm-a; }
+.av[data-anim='mix'] .av__arm.is-right .av__arm-bone { animation-direction: reverse; }
+
+/* --- cue: one cup to the ear ------------------------------------------- */
+
+@keyframes av-cue-head {
+  0%, 100% { transform: rotate(-14deg); }
+  50%      { transform: rotate(6deg); }
+}
+@keyframes av-cue-platter {
+  0%, 100% { transform: rotate(34deg); }
+  50%      { transform: rotate(60deg); }
+}
+
+/* A single-bone arm cannot bend an elbow to the ear, so the cue pose reads as
+ * one arm raised beside the head with the head leaning into it. */
+.av[data-anim='cue'] { --av-cycle: 2; }
+.av[data-anim='cue'] .av__head { animation-name: av-cue-head; }
+.av[data-anim='cue'] .av__torso { animation-name: av-bob-torso; }
+.av[data-anim='cue'] .av__arm.is-left .av__arm-bone {
+  animation: none;
+  transform: rotate(-104deg);
+}
+.av[data-anim='cue'] .av__arm.is-left .av__hand {
+  animation: none;
+  transform: rotate(34deg);
+}
+.av[data-anim='cue'] .av__arm.is-right .av__arm-bone { animation-name: av-cue-platter; }
+
+/* --- hype: one arm to the crowd --------------------------------------- */
+
+@keyframes av-hype-arm {
+  0%, 100% { transform: rotate(-70deg); }
+  30%      { transform: rotate(-136deg); }
+}
+@keyframes av-hype-torso {
+  0%, 100% { transform: rotate(0deg) translateY(4px); }
+  50%      { transform: rotate(-10deg) translateY(-8px); }
+}
+
+.av[data-anim='hype'] { --av-cycle: 1.5; }
+.av[data-anim='hype'] .av__torso { animation-name: av-hype-torso; }
+.av[data-anim='hype'] .av__head { animation-name: av-bob-head; }
+.av[data-anim='hype'] .av__body { animation-name: av-bob-body; }
+.av[data-anim='hype'] .av__arm.is-right .av__arm-bone { animation-name: av-hype-arm; }
+.av[data-anim='hype'] .av__arm.is-left .av__arm-bone {
+  animation: none;
+  transform: rotate(36deg);
+}
+
+/* ======================================================================== */
+/* Transitions                                                              */
+/* ======================================================================== */
+
+@keyframes av-walk-leg {
+  0%, 100% { transform: rotate(-32deg); }
+  50%      { transform: rotate(32deg); }
+}
+@keyframes av-walk-arm {
+  0%, 100% { transform: rotate(60deg); }
+  50%      { transform: rotate(-10deg); }
+}
+@keyframes av-walk-body {
+  0%, 100% { transform: translateY(0); }
+  25%, 75% { transform: translateY(-14px); }
+}
+
+.av[data-anim='walk'] { --av-cycle: 1; }
+.av[data-anim='walk'] .av__body { animation-name: av-walk-body; }
+.av[data-anim='walk'] .av__torso { animation-name: av-bob-torso; }
+.av[data-anim='walk'] .av__leg-bone { animation-name: av-walk-leg; }
+.av[data-anim='walk'] .av__leg.is-right .av__leg-bone { animation-direction: reverse; }
+.av[data-anim='walk'] .av__arm-bone { animation-name: av-walk-arm; }
+.av[data-anim='walk'] .av__arm.is-right .av__arm-bone { animation-direction: reverse; }
+
+@keyframes av-enter {
+  0%   { opacity: 0; transform: translateY(18px) scale(0.9); }
+  60%  { opacity: 1; transform: translateY(-6px) scale(1.02); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.av--entering {
+  animation: av-enter 0.45s ease-out both;
+}
+
+/* A short pop when a listener woots. */
+@keyframes av-woot {
+  0%, 100% { transform: translateY(0) scale(1); }
+  40%      { transform: translateY(-16px) scale(1.06); }
+}
+
+.av--wooted {
+  animation: av-woot 0.5s ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .av[data-anim] .av__body,
+  .av[data-anim] .av__torso,
+  .av[data-anim] .av__head,
+  .av[data-anim] .av__arm-bone,
+  .av[data-anim] .av__hand,
+  .av[data-anim] .av__leg-bone {
+    animation-name: none;
+  }
+  .av[data-anim]:not([data-anim='idle']) .av__body {
+    animation-name: av-bob-body;
+    animation-duration: 1.6s;
+  }
+  .av--entering,
+  .av--wooted,
+  .av__aura::before,
+  .av__aura::after,
+  .av__aura i {
+    animation: none;
+  }
+  .av__aura i {
+    display: none;
+  }
+}

@@ -1,0 +1,14 @@
+<!--
+  Hat slot: 220x150. The head's crown centre is at (110, 44) and the head spans
+  x 23.5 to 196.5, so anything resting on the head sits with its base near y=60.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" width="220" height="150" viewBox="0 0 220 150">
+  <g>
+    <path d="M110 8 L152 92 H68 Z" fill="#ef6c17"/>
+    <path d="M110 8 L131 50 H110 Z" fill="#ff8a3a"/>
+    <path d="M92.5 46 H127.5 L134 62 H86 Z" fill="#f5f1e6"/>
+    <ellipse cx="110" cy="92" rx="52" ry="9" fill="#2a2f3d"/>
+    <rect x="58" y="86" width="104" height="14" rx="7" fill="#343b4d"/>
+    <rect x="58" y="86" width="104" height="5" rx="2.5" fill="#434b60"/>
+  </g>
+</svg>

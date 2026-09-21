@@ -1,0 +1,14 @@
+<!-- Costume torso canvas: 176x200. Axis x=89, shoulder line y=48, hips at y=200. -->
+<svg xmlns="http://www.w3.org/2000/svg" width="176" height="200" viewBox="0 0 176 200">
+  <g>
+    <path d="M6 68 Q6 32 40 30 L64 30 Q89 44 114 30 L138 30 Q170 32 170 68 L170 200 H6 Z" fill="#5aa84a"/>
+    <path d="M6 68 Q6 32 40 30 L64 30 Q70 48 66 200 H6 Z" fill="#6cbc59"/>
+    <ellipse cx="89" cy="140" rx="54" ry="56" fill="#d8e9a8"/>
+    <path d="M40 112 H138 M38 136 H140 M40 160 H138 M48 182 H130"
+          stroke="#c3d894" stroke-width="6" stroke-linecap="round"/>
+    <path d="M10 58 L22 32 L34 58 Z" fill="#3f8a34"/>
+    <path d="M36 50 L48 28 L60 50 Z" fill="#3f8a34"/>
+    <path d="M116 50 L128 28 L140 50 Z" fill="#3f8a34"/>
+    <path d="M142 58 L154 32 L166 58 Z" fill="#3f8a34"/>
+  </g>
+</svg>

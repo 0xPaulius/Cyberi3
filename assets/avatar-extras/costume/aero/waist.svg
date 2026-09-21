@@ -1,0 +1,16 @@
+<!-- Costume hip canvas: 176x54. Same glossy material, cut like normal pants. -->
+<svg xmlns="http://www.w3.org/2000/svg" width="176" height="54" viewBox="0 0 176 54">
+  <defs>
+    <linearGradient id="aqua" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2fb5ff"/>
+      <stop offset="1" stop-color="#0f4fb8"/>
+    </linearGradient>
+  </defs>
+  <g>
+    <path d="M12 0 H165 V32 Q154 50 130 50 Q100 50 88 30 Q76 50 48 50 Q22 50 12 32 Z" fill="url(#aqua)"/>
+    <path d="M12 0 H165 V10 Q88 22 12 10 Z" fill="#fff" opacity="0.45"/>
+    <path d="M30 14 Q40 34 50 46" stroke="#fff" stroke-width="5" fill="none" stroke-linecap="round" opacity="0.6"/>
+    <circle cx="136" cy="30" r="6" fill="none" stroke="#e6fbff" stroke-width="2" opacity="0.85"/>
+    <circle cx="134" cy="28" r="1.8" fill="#fff"/>
+  </g>
+</svg>

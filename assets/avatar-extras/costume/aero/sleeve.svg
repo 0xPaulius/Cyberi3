@@ -1,0 +1,16 @@
+<!-- Costume sleeve: 171x142. Outline traced from the pack's own sleeve. -->
+<svg xmlns="http://www.w3.org/2000/svg" width="171" height="142" viewBox="0 0 171 142">
+  <defs>
+    <linearGradient id="aqua" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#8ff0ff"/>
+      <stop offset="0.55" stop-color="#2fb5ff"/>
+      <stop offset="1" stop-color="#1465d6"/>
+    </linearGradient>
+  </defs>
+  <g>
+    <polygon fill="url(#aqua)" points="7,0 52,10 78,20 98,30 113,40 126,50 137,60 147,70 155,80 162,90 169,100 167,110 161,120 151,130 133,140 130,140 122,130 114,120 103,110 88,100 66,90 21,80 14,70 8,60 3,50 1,40 0,30 0,20 3,10"/>
+    <path d="M12 10 Q62 32 112 70 Q142 94 154 118" stroke="#fff" stroke-width="7" fill="none" stroke-linecap="round" opacity="0.6"/>
+    <circle cx="84" cy="70" r="7" fill="none" stroke="#e6fbff" stroke-width="2" opacity="0.85"/>
+    <circle cx="82" cy="68" r="2" fill="#fff"/>
+  </g>
+</svg>

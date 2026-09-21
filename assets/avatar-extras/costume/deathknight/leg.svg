@@ -1,0 +1,18 @@
+<!-- Costume trouser: 111x166. Outline traced from the pack's own trouser leg.
+     Plate greave with a gold knee band. -->
+<svg xmlns="http://www.w3.org/2000/svg" width="111" height="166" viewBox="0 0 111 166">
+  <defs>
+    <linearGradient id="iron" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#3f495b"/>
+      <stop offset="0.6" stop-color="#1c2230"/>
+      <stop offset="1" stop-color="#2b3342"/>
+    </linearGradient>
+  </defs>
+  <g>
+    <polygon fill="url(#iron)" points="56,0 80,12 84,24 88,36 92,48 95,60 98,72 101,84 104,96 106,108 108,120 109,132 110,144 104,156 102,164 40,164 38,156 38,144 37,132 36,120 35,108 33,96 30,84 27,72 23,60 19,48 12,36 4,24 8,12 39,0"/>
+    <path d="M50 18 L46 164" stroke="#5c6678" stroke-width="5" fill="none" opacity="0.6"/>
+    <path d="M28 76 Q64 86 100 76" stroke="#c9953a" stroke-width="6" fill="none" stroke-linecap="round"/>
+    <path d="M36 122 Q70 130 106 120" stroke="#0e1219" stroke-width="3" fill="none"/>
+    <path d="M60 30 L58 70" stroke="#3fe0ff" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
+  </g>
+</svg>

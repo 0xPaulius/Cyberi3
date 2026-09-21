@@ -1,0 +1,39 @@
+# TLS in front of the app.
+#
+# The room is reached by name only, and that is not cosmetic: YouTube refuses
+# to authorise label-owned videos when the embedding page's origin is a bare IP
+# address, answering the player with error 150 and an "auth" code for
+# essentially all commercial music. The same video, with the same player
+# parameters, plays from a hostname. Serving the IP at all would only invite
+# people onto an address where the music is broken, so it is not served.
+#
+# Cloudflare terminates TLS for visitors and connects back here over HTTPS in
+# its "Full" mode, which encrypts that hop without verifying the certificate on
+# it. The certificate here therefore comes from Caddy's own internal CA: there
+# is no public ACME to run for a name whose port 80 belongs to Cloudflare, and
+# nothing to renew from outside. No browser ever sees it; browsers only ever
+# see Cloudflare's edge certificate. This is also what retired the previous
+# Let's Encrypt certificate for the bare IP, which came from the "shortlived"
+# profile, expired every six days, and made the renewal loop load-bearing.
+#
+# Nothing listens on port 80: Cloudflare speaks to this origin over 443, and no
+# ACME challenge needs answering. Turning the Cloudflare proxy off would mean
+# publishing 80 again so Caddy could pass an HTTP-01 challenge for a public
+# certificate.
+#
+# There is deliberately no default_sni. It existed because TLS cannot carry an
+# IP address in SNI, so a browser opening https://<ip> sent no server name and
+# Caddy had nothing to match a certificate against. Both browsers and
+# Cloudflare send a hostname, so a connection arriving with no SNI is one
+# aimed at the bare IP, and failing its handshake is the intent.
+#
+# The admin API is left enabled so deploys can reload this file without
+# dropping connections. It binds to localhost inside the container only, and no
+# port is published for it.
+
+https://{$SITE_HOST} {
+	tls internal
+
+	# Handles the Socket.IO websocket upgrade as well as normal requests.
+	reverse_proxy plugdj:3000
+}

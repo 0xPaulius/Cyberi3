@@ -1,0 +1,1356 @@
+/* Visual direction, so the pieces below read as one thing rather than four:
+ *
+ *   - Apple's three principles carry the structure. Clarity: one type family,
+ *     a strict size scale, generous spacing. Deference: chrome is translucent
+ *     glass so the video and the dance floor own the screen. Depth: real
+ *     layering (blur, light from above, shadows that fall down).
+ *   - Frutiger Aero supplies the material: glossy gel buttons with a specular
+ *     top half, aqua and cyan light, soft bubbles drifting in the background.
+ *   - Y2K supplies the type treatment: chrome-gradient wordmark, tracked
+ *     uppercase labels, an iridescent sheen that sweeps the primary button.
+ *   - Warcraft supplies the metalwork and the memento mori: gold-and-iron
+ *     frames around the stage and the room, and a skull emblem that marks the
+ *     brand, the gates, and the booth plaque. The hall backdrop behind the
+ *     dancers carries the rest.
+ */
+
+:root {
+  color-scheme: dark;
+
+  --bg: #050a12;
+  --bg-2: #0a1320;
+  --panel: rgb(10 22 38 / 72%);
+  --panel-2: rgb(120 200 255 / 8%);
+  --line: rgb(140 210 255 / 14%);
+  --line-strong: rgb(160 225 255 / 30%);
+  --text: #eef8ff;
+  --muted: #8eb0c8;
+
+  --aqua: #3fe0ff;
+  --aqua-2: #1f8cff;
+  --primary: #2ab8ff;
+  --primary-ink: #04121f;
+  --woot: #58f2a5;
+  --meh: #ff6d5a;
+  --grab: #f5c85a;
+  --gold: #d8a94a;
+  --gold-2: #f6dc8c;
+  --gold-ink: #7a5a1c;
+  --iron: #1d2431;
+
+  --radius: 14px;
+  --shadow: 0 18px 50px rgb(0 0 0 / 55%);
+  --blur: blur(18px) saturate(140%);
+
+  /* Aqua-era gel: a bright specular band over the top half of a control. */
+  --gloss: linear-gradient(
+    180deg,
+    rgb(255 255 255 / 24%) 0%,
+    rgb(255 255 255 / 8%) 46%,
+    rgb(255 255 255 / 0%) 52%
+  );
+  /* Raid-gear gold, dark in the middle where the metal turns away from the light. */
+  --metal: linear-gradient(
+    180deg,
+    #efd48c 0%,
+    #c9953a 30%,
+    #6e4d15 50%,
+    #b7852c 70%,
+    #e6c476 100%
+  );
+  /* Millennium chrome, for the wordmark. */
+  --chrome: linear-gradient(
+    180deg,
+    #fff 0%,
+    #d5ecfb 38%,
+    #7ea3bd 50%,
+    #e7f4ff 60%,
+    #fff 100%
+  );
+  --skull: url('/assets/img/skull.svg');
+
+  /* Booth height and avatar scales step together: 312px goes with a 0.32 DJ,
+   * and the avatar rig is 620px tall at scale 1. Avatar scales have to stay
+   * unitless, so the sizes come in tiers rather than from a calc on --booth-h. */
+  --booth-h: 312px;
+  --dj-scale: 0.32;
+  --dance-scale: 0.3;
+  --floor-pad: 14px;
+  /* Booth, plus a dancer standing clear of the floor with their name under
+   * them. Dancers are bottom-aligned, so a floor one pixel short cuts off
+   * heads rather than feet. */
+  --room-min: calc(
+    var(--booth-h) + var(--dance-scale) * 620px + 2 * var(--floor-pad) + 18px
+  );
+}
+
+/* A shorter window cannot hold the full booth, a dancer and a 16:9 video at
+ * once, so the room steps down a size instead of overflowing. */
+@media (max-height: 900px) {
+  :root {
+    --booth-h: 220px;
+    --dj-scale: 0.226;
+    --dance-scale: 0.2;
+    --floor-pad: 10px;
+  }
+}
+@media (max-height: 780px) {
+  :root {
+    --booth-h: 190px;
+    --dj-scale: 0.195;
+    --dance-scale: 0.17;
+    --floor-pad: 8px;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* The panels scroll often and the platform default reads as a bright stripe
+ * across the dark chrome. */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(140 210 255 / 22%) transparent;
+}
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  border: 3px solid transparent;
+  border-radius: 99px;
+  background-color: rgb(140 210 255 / 22%);
+  background-clip: content-box;
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgb(140 210 255 / 40%);
+}
+
+/* Author display rules below would otherwise beat the UA rule for [hidden]. */
+[hidden] {
+  display: none !important;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+/* Night sky with an aurora, and a few Aero bubbles drifting in it. Every
+ * layer is a gradient so the page paints before any image arrives. */
+body {
+  margin: 0;
+  background:
+    /* Each bubble: a faint glass fill, a soft rim, and a specular dot up-left. */
+    radial-gradient(6px 6px at 16.4% 30.6%, rgb(255 255 255 / 35%) 30%, transparent 70%),
+    radial-gradient(60px 60px at 18% 32%, rgb(150 230 255 / 4%) 0 50%, rgb(160 235 255 / 11%) 57%, transparent 64%),
+    radial-gradient(4px 4px at 85% 67.2%, rgb(255 255 255 / 30%) 30%, transparent 70%),
+    radial-gradient(34px 34px at 86% 68%, rgb(150 230 255 / 4%) 0 50%, rgb(160 235 255 / 10%) 57%, transparent 64%),
+    radial-gradient(8px 8px at 69.8% 10.6%, rgb(255 255 255 / 28%) 30%, transparent 70%),
+    radial-gradient(90px 90px at 72% 12%, rgb(150 230 255 / 3%) 0 50%, rgb(160 235 255 / 8%) 57%, transparent 64%),
+    radial-gradient(1200px 560px at 50% -10%, rgb(31 140 255 / 30%) 0%, transparent 70%),
+    radial-gradient(900px 500px at 8% 100%, rgb(63 224 255 / 10%) 0%, transparent 60%),
+    radial-gradient(800px 500px at 100% 90%, rgb(140 90 255 / 12%) 0%, transparent 60%),
+    var(--bg);
+  background-attachment: fixed;
+  color: var(--text);
+  font: 15px/1.5 ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+}
+
+button,
+input,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+/* The skull, in whatever colour the context calls for. */
+.top__brand::before,
+.gate__card::before,
+.booth__label::before {
+  content: '';
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  background: currentColor;
+  -webkit-mask: var(--skull) center / contain no-repeat;
+  mask: var(--skull) center / contain no-repeat;
+}
+
+/* --- buttons ------------------------------------------------------------- */
+
+.btn {
+  --btn-bg: rgb(120 200 255 / 10%);
+  --btn-fg: var(--text);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 9px 15px;
+  border: 1px solid var(--line-strong);
+  border-radius: 12px;
+  background: var(--gloss), var(--btn-bg);
+  color: var(--btn-fg);
+  cursor: pointer;
+  font-weight: 600;
+  letter-spacing: 0.005em;
+  text-shadow: 0 1px 0 rgb(0 0 0 / 35%);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 28%),
+    inset 0 -1px 0 rgb(0 0 0 / 30%),
+    0 2px 8px rgb(0 0 0 / 35%);
+  backdrop-filter: blur(10px);
+  transition: filter 0.15s, transform 0.06s, box-shadow 0.15s;
+  white-space: nowrap;
+}
+.btn:hover:not(:disabled) {
+  filter: brightness(1.15);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 34%),
+    inset 0 -1px 0 rgb(0 0 0 / 30%),
+    0 4px 14px rgb(0 0 0 / 40%),
+    0 0 0 1px rgb(160 225 255 / 20%);
+}
+.btn:active:not(:disabled) {
+  transform: translateY(1px);
+  box-shadow:
+    inset 0 2px 6px rgb(0 0 0 / 45%),
+    0 1px 3px rgb(0 0 0 / 30%);
+}
+.btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.btn b {
+  font-variant-numeric: tabular-nums;
+  opacity: 0.85;
+}
+.btn--primary {
+  --btn-bg: linear-gradient(180deg, #62ecff 0%, #2fb5ff 50%, var(--aqua-2) 100%);
+  --btn-fg: var(--primary-ink);
+  position: relative;
+  border-color: rgb(190 245 255 / 55%);
+  text-shadow: 0 1px 0 rgb(255 255 255 / 40%);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 55%),
+    inset 0 -1px 0 rgb(0 40 90 / 35%),
+    0 2px 8px rgb(0 0 0 / 35%),
+    0 0 22px rgb(63 224 255 / 30%);
+  overflow: hidden;
+}
+/* Iridescent sweep on hover: the Y2K holographic sticker, kept to a moment. */
+.btn--primary::after {
+  content: '';
+  position: absolute;
+  inset: -40% -60%;
+  background: linear-gradient(
+    115deg,
+    transparent 40%,
+    rgb(255 255 255 / 35%) 48%,
+    rgb(255 190 255 / 30%) 52%,
+    transparent 60%
+  );
+  transform: translateX(-70%);
+  pointer-events: none;
+}
+.btn--primary:hover:not(:disabled)::after {
+  animation: sheen 0.9s ease-out;
+}
+@keyframes sheen {
+  to {
+    transform: translateX(70%);
+  }
+}
+.btn--ghost {
+  --btn-bg: rgb(120 200 255 / 5%);
+}
+.btn--link {
+  --btn-bg: transparent;
+  border-color: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+  color: var(--muted);
+  font-weight: 500;
+}
+.btn--link:hover {
+  color: var(--text);
+}
+.btn--block {
+  width: 100%;
+}
+.btn--icon {
+  padding: 8px 10px;
+}
+
+/* Stroke icons from the sprite take the button's text colour. */
+.ico {
+  width: 17px;
+  height: 17px;
+  flex: none;
+  filter: drop-shadow(0 1px 0 rgb(0 0 0 / 35%));
+}
+.btn--primary .ico {
+  filter: drop-shadow(0 1px 0 rgb(255 255 255 / 30%));
+}
+.btn--icon .ico {
+  width: 18px;
+  height: 18px;
+}
+
+/* The vote buttons carry the rendered gel hands. The art hangs a little over
+ * the top edge like a badge, and lights up when the vote is cast. */
+.btn--vote {
+  padding: 6px 14px 6px 8px;
+}
+.btn__art {
+  width: auto;
+  height: 30px;
+  margin: -6px 0;
+  filter: drop-shadow(0 2px 3px rgb(0 0 0 / 60%)) saturate(0.8);
+  transition: transform 0.15s, filter 0.15s;
+}
+.btn:hover:not(:disabled) .btn__art {
+  transform: translateY(-1px) scale(1.06);
+}
+.btn.is-on .btn__art {
+  filter: drop-shadow(0 2px 3px rgb(0 0 0 / 60%)) drop-shadow(0 0 8px currentColor) saturate(1.15);
+}
+.btn--woot.is-on {
+  --btn-bg: linear-gradient(180deg, #8bffc6, var(--woot) 55%, #22c97a);
+  --btn-fg: #04301b;
+  border-color: rgb(140 255 200 / 60%);
+  text-shadow: 0 1px 0 rgb(255 255 255 / 35%);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 50%), 0 0 22px rgb(88 242 165 / 35%);
+}
+.btn--meh.is-on {
+  --btn-bg: linear-gradient(180deg, #ff9e8f, var(--meh) 55%, #e2452f);
+  --btn-fg: #3a0d06;
+  border-color: rgb(255 170 155 / 60%);
+  text-shadow: 0 1px 0 rgb(255 255 255 / 30%);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 50%), 0 0 22px rgb(255 109 90 / 35%);
+}
+.btn--grab.is-on {
+  --btn-bg: linear-gradient(180deg, var(--gold-2), var(--gold) 55%, #b8862a);
+  --btn-fg: #3a2606;
+  border-color: rgb(255 230 160 / 65%);
+  text-shadow: 0 1px 0 rgb(255 255 255 / 35%);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 55%), 0 0 22px rgb(245 200 90 / 35%);
+}
+
+/* --- gate ---------------------------------------------------------------- */
+
+.gate {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background:
+    linear-gradient(to bottom, rgb(5 10 18 / 30%), rgb(5 10 18 / 72%)),
+    url('/assets/img/hall-v1.jpg') center / cover no-repeat,
+    var(--bg);
+}
+.gate--enter {
+  background: rgb(5 10 18 / 70%);
+  backdrop-filter: blur(10px) saturate(120%);
+}
+.gate__card {
+  position: relative;
+  width: min(400px, 100%);
+  padding: 30px 28px 26px;
+  border: 1px solid rgb(216 169 74 / 45%);
+  border-radius: 20px;
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / 7%), rgb(255 255 255 / 0%) 40%),
+    rgb(8 18 32 / 74%);
+  backdrop-filter: var(--blur);
+  box-shadow:
+    var(--shadow),
+    inset 0 1px 0 rgb(255 255 255 / 12%),
+    0 0 0 4px rgb(5 10 18 / 60%),
+    0 0 0 5px rgb(216 169 74 / 35%);
+  text-align: center;
+}
+/* The skull sits on the top edge of the card like a clasp. */
+.gate__card::before {
+  position: absolute;
+  top: -22px;
+  left: 50%;
+  translate: -50% 0;
+  font-size: 44px;
+  color: var(--gold);
+  filter: drop-shadow(0 4px 10px rgb(0 0 0 / 70%)) drop-shadow(0 0 14px rgb(245 200 90 / 35%));
+}
+.gate__title {
+  margin: 8px 0 0;
+  font-size: 34px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  background: var(--chrome);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 2px 0 rgb(0 0 0 / 45%));
+}
+.gate__title span {
+  background: linear-gradient(180deg, #a9f3ff, var(--aqua) 50%, var(--aqua-2));
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+.gate__sub {
+  margin: 6px 0 22px;
+  color: var(--muted);
+}
+.gate__error {
+  margin: 0 0 12px;
+  padding: 9px 12px;
+  border: 1px solid rgb(255 109 90 / 35%);
+  border-radius: 10px;
+  background: rgb(255 109 90 / 12%);
+  color: #ffc1b8;
+  font-size: 14px;
+}
+
+.field {
+  display: block;
+  margin-bottom: 14px;
+  text-align: left;
+}
+.field span {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--muted);
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+/* Every text control is a dark glass well with light falling in from above. */
+.field input,
+.chat__form input,
+.pl__search input,
+.pl__head select,
+.picker__row select {
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  background: rgb(3 9 16 / 62%);
+  box-shadow: inset 0 2px 6px rgb(0 0 0 / 45%), inset 0 -1px 0 rgb(255 255 255 / 5%);
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.field input {
+  width: 100%;
+  padding: 11px 13px;
+}
+.field input:focus,
+input:focus,
+select:focus {
+  outline: none;
+  border-color: rgb(63 224 255 / 60%);
+  box-shadow:
+    inset 0 2px 6px rgb(0 0 0 / 45%),
+    0 0 0 3px rgb(63 224 255 / 18%),
+    0 0 18px rgb(63 224 255 / 20%);
+}
+input[type='range']:focus {
+  box-shadow: none;
+}
+
+/* --- shell --------------------------------------------------------------- */
+
+.app {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 348px;
+  grid-template-rows: auto minmax(0, 1fr);
+  grid-template-areas:
+    'top  top'
+    'main side';
+  height: 100vh;
+}
+
+.top {
+  grid-area: top;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 12px 18px;
+  border-bottom: 1px solid var(--line);
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / 6%), rgb(255 255 255 / 0%) 55%),
+    rgb(8 18 32 / 68%);
+  backdrop-filter: var(--blur);
+  box-shadow: 0 1px 0 rgb(255 255 255 / 5%) inset;
+}
+.top__brand {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  background: var(--chrome);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.top__brand::before {
+  align-self: center;
+  font-size: 22px;
+  color: var(--gold);
+  background: var(--gold);
+  filter: drop-shadow(0 0 8px rgb(245 200 90 / 40%));
+}
+.top__brand span {
+  background: linear-gradient(180deg, #a9f3ff, var(--aqua) 50%, var(--aqua-2));
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+.top__brand em {
+  color: var(--muted);
+  background: none;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.top__right {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-left: auto;
+}
+.volume {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.volume input {
+  width: 96px;
+  accent-color: var(--aqua);
+}
+.me {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.now {
+  min-width: 0;
+  flex: 1;
+  max-width: 520px;
+}
+.now__title {
+  overflow: hidden;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.now__meta {
+  display: flex;
+  gap: 10px;
+  color: var(--muted);
+  font-size: 12.5px;
+}
+.now__time {
+  margin-left: auto;
+  font-variant-numeric: tabular-nums;
+}
+/* An empty track bar reads as a stray line under the title. */
+.now.is-idle .now__bar {
+  visibility: hidden;
+}
+.now__bar {
+  height: 4px;
+  margin-top: 6px;
+  border-radius: 2px;
+  background: rgb(0 0 0 / 45%);
+  box-shadow: inset 0 1px 2px rgb(0 0 0 / 60%);
+  overflow: hidden;
+}
+.now__bar i {
+  display: block;
+  width: 0;
+  height: 100%;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--aqua-2), var(--aqua));
+  box-shadow: 0 0 10px rgb(63 224 255 / 70%);
+}
+
+/* --- stage --------------------------------------------------------------- */
+
+.stage {
+  grid-area: main;
+  display: grid;
+  /* Both rows carry their own floor, or a grid item taller than its track
+   * overflows on top of the controls instead of scrolling the stage. */
+  grid-template-rows: minmax(160px, 1fr) minmax(var(--room-min), 1.3fr) auto;
+  gap: 14px;
+  min-width: 0;
+  padding: 16px 18px;
+  overflow-x: hidden;
+  /* Only as a last resort: the rows above are sized to fit without it. */
+  overflow-y: auto;
+}
+
+.screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 0;
+  /* The frame measures itself against this box, so a short stage shrinks the
+   * video instead of pushing the dance floor off screen. */
+  container-type: size;
+}
+/* Gold over iron: the border is painted by a gradient in the border box while
+ * the padding box stays black behind the player. */
+.screen__frame,
+.room {
+  border: 3px solid transparent;
+  background-origin: border-box;
+  box-shadow:
+    var(--shadow),
+    0 0 0 1px rgb(0 0 0 / 80%),
+    0 0 0 4px rgb(29 36 49 / 90%),
+    0 0 0 5px rgb(216 169 74 / 40%),
+    0 0 40px rgb(63 224 255 / 8%);
+}
+.screen__frame {
+  position: relative;
+  width: min(100%, 620px);
+  /* 22px leaves the status line inside the height the container reports. */
+  width: min(100%, 620px, max(200px, calc((100cqh - 22px) * 16 / 9)));
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius);
+  background:
+    linear-gradient(#000, #000) padding-box,
+    var(--metal) border-box;
+  overflow: hidden;
+}
+/* One slot per provider, both built up front so either can start on a click.
+ * Only the one playing is on screen. */
+.screen__slot {
+  position: absolute;
+  inset: 0;
+  display: none;
+}
+.screen[data-provider='youtube'] #ytplayer-slot,
+.screen[data-provider='soundcloud'] #scplayer-slot {
+  display: block;
+}
+.screen__slot iframe,
+.screen__slot > div {
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+/* An empty booth means the embed has no video to load, and YouTube fills the
+ * frame with its own error, so the room sees this instead. */
+.screen__idle {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: grid;
+  place-content: center;
+  gap: 6px;
+  padding: 16px;
+  /* The caption sits in the lower third, where the art was kept dark. */
+  align-content: end;
+  padding-bottom: 8%;
+  background:
+    linear-gradient(to bottom, rgb(5 10 18 / 0%) 55%, rgb(5 10 18 / 70%) 100%),
+    url('/assets/img/idle-v1.jpg') center / cover no-repeat,
+    #050a12;
+  color: var(--muted);
+  text-align: center;
+  text-shadow: 0 1px 2px rgb(0 0 0 / 80%);
+}
+.screen__idle strong {
+  color: var(--text);
+  font-size: 16px;
+  letter-spacing: 0.01em;
+}
+.screen__idle span {
+  font-size: 13px;
+}
+.screen:not(.is-idle) .screen__idle {
+  display: none;
+}
+.screen__status {
+  margin: 8px 0 0;
+  color: var(--grab);
+  font-size: 13px;
+}
+
+/* The hall. The image carries the fantasy; the gradient over it keeps the
+ * dancers legible where they actually stand. */
+.room {
+  position: relative;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  min-height: var(--room-min);
+  border-radius: var(--radius);
+  background:
+    linear-gradient(to bottom, rgb(5 10 18 / 10%) 0%, rgb(5 10 18 / 0%) 40%, rgb(5 10 18 / 55%) 100%) padding-box,
+    url('/assets/img/hall-v1.jpg') center bottom / cover no-repeat padding-box,
+    var(--metal) border-box;
+  overflow: hidden;
+}
+
+/* The DJ stands behind the decks and must read in full, so the geometry here
+ * is derived rather than eyeballed. The rig is 620px tall at scale 1 with the
+ * figure occupying y 4..576, and the DJ renders at scale 0.32 (198px). The
+ * desk art (booth-v1.webp) is 960x392 with the turntable plane starting 28%
+ * down from its top. Desk 480px wide is therefore 196px tall, its top surface
+ * 141px above the booth floor; lifting the rig 101px puts the feet 26px behind
+ * that edge, with the whole body above it and 13px of headroom. Those numbers
+ * ride on --booth-h so the arrangement holds at any booth size. */
+.room__booth {
+  position: relative;
+  display: grid;
+  place-items: end center;
+  height: var(--booth-h);
+}
+.booth__desk {
+  position: relative;
+  z-index: 2;
+  width: min(calc(var(--booth-h) * 480 / 312), 74%);
+  height: auto;
+  pointer-events: none;
+  filter: drop-shadow(0 14px 22px rgb(0 0 0 / 65%)) drop-shadow(0 0 18px rgb(63 224 255 / 18%));
+}
+.booth__dj {
+  position: absolute;
+  bottom: calc(var(--booth-h) * 101 / 312);
+  left: 50%;
+  z-index: 1;
+  translate: -50% 0;
+}
+/* The booth label already names the DJ, and the floor caption would otherwise
+ * sit under the rig and lift it off the derived position above. */
+.booth__dj .dancer__name {
+  display: none;
+}
+/* An iron plaque with a skull clasp. Left-aligned so it never sits on top of
+ * the centred DJ avatar. */
+.booth__label {
+  position: absolute;
+  top: 10px;
+  left: 12px;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  max-width: 46%;
+  overflow: hidden;
+  padding: 5px 12px 5px 10px;
+  border: 1px solid rgb(216 169 74 / 45%);
+  border-radius: 99px;
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / 10%), rgb(255 255 255 / 0%) 50%),
+    rgb(8 14 24 / 80%);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 12px rgb(0 0 0 / 50%), inset 0 1px 0 rgb(255 255 255 / 10%);
+  color: #dbe9f5;
+  font-size: 12.5px;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.booth__label::before {
+  flex: none;
+  font-size: 14px;
+  color: var(--gold);
+  background: var(--gold);
+}
+
+.room__floor {
+  display: flex;
+  flex-wrap: wrap;
+  /* Dancers stand on the floor rather than floating at the top of the space. */
+  align-content: flex-end;
+  justify-content: center;
+  gap: 4px 2px;
+  /* Dancers are bottom-aligned, so only the bottom padding decides where they
+   * stand. Moving most of it to the top drops them onto the floor's edge and
+   * frees the headroom a tall hat needs, without making the floor any taller. */
+  padding: calc(var(--floor-pad) + 12px) 16px max(2px, calc(var(--floor-pad) - 12px));
+  overflow-y: auto;
+  /* The lip of the stage, catching the light. */
+  border-top: 1px solid rgb(160 225 255 / 28%);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 8%), inset 0 24px 40px -24px rgb(63 224 255 / 25%);
+  background: linear-gradient(to bottom, rgb(63 224 255 / 6%), rgb(5 10 18 / 20%) 40%, rgb(5 10 18 / 45%));
+}
+
+.dancer {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.dancer__name {
+  max-width: 108px;
+  overflow: hidden;
+  color: #d6e6f2;
+  font-size: 11px;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  text-shadow: 0 1px 2px rgb(0 0 0 / 90%), 0 0 8px rgb(0 0 0 / 80%);
+  white-space: nowrap;
+}
+.dancer.is-dj .dancer__name {
+  color: var(--woot);
+}
+/* The tempo rides on the name line: a second line would raise every dancer
+ * and break the floor's derived height. */
+.dancer__bpm {
+  margin-left: 5px;
+  color: var(--aqua);
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  opacity: 0.85;
+}
+.dancer__bpm::after {
+  content: ' bpm';
+  font-weight: 500;
+  opacity: 0.7;
+}
+.dancer__vote {
+  position: absolute;
+  top: -6px;
+  right: 2px;
+  animation: vote-pop 0.35s ease-out;
+}
+.dancer__vote .vote-art {
+  height: 22px;
+  filter: drop-shadow(0 2px 3px rgb(0 0 0 / 80%));
+}
+@keyframes vote-pop {
+  0%   { transform: scale(0.4) translateY(8px); opacity: 0; }
+  70%  { transform: scale(1.15) translateY(-2px); opacity: 1; }
+  100% { transform: scale(1) translateY(0); }
+}
+.vote-art {
+  display: inline-block;
+  height: 16px;
+  width: auto;
+  vertical-align: -3px;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.controls__votes {
+  display: flex;
+  gap: 8px;
+}
+.controls__dj {
+  display: flex;
+  gap: 8px;
+  margin-left: auto;
+}
+
+/* Tempo. A glass pill with a dot that beats at the chosen BPM, so the number
+ * is something you can feel before anyone's avatar catches up to it. */
+.bpm {
+  --bpm: 120;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 6px 12px 6px 10px;
+  border: 1px solid var(--line-strong);
+  border-radius: 99px;
+  background: var(--gloss), rgb(120 200 255 / 8%);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 22%), 0 2px 8px rgb(0 0 0 / 30%);
+  backdrop-filter: blur(10px);
+  cursor: pointer;
+}
+.bpm__pulse {
+  flex: none;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--aqua);
+  box-shadow: 0 0 10px var(--aqua);
+  animation: bpm-pulse calc(60s / var(--bpm)) ease-out infinite;
+}
+@keyframes bpm-pulse {
+  0%   { transform: scale(1.35); opacity: 1; }
+  60%  { transform: scale(0.85); opacity: 0.55; }
+  100% { transform: scale(1); opacity: 0.7; }
+}
+.bpm__label {
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+.bpm input {
+  width: 110px;
+  accent-color: var(--aqua);
+}
+.bpm__value {
+  min-width: 3ch;
+  color: #bdf2ff;
+  font-size: 14px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  text-shadow: 0 0 10px rgb(63 224 255 / 50%);
+}
+@media (prefers-reduced-motion: reduce) {
+  .bpm__pulse {
+    animation: none;
+  }
+}
+
+/* --- sidebar ------------------------------------------------------------- */
+
+.side {
+  grid-area: side;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  min-height: 0;
+  border-left: 1px solid var(--line);
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / 4%), rgb(255 255 255 / 0%) 120px),
+    var(--panel);
+  backdrop-filter: var(--blur);
+}
+.tabs {
+  display: flex;
+  padding: 6px;
+  gap: 4px;
+  border-bottom: 1px solid var(--line);
+}
+.tab {
+  position: relative;
+  flex: 1;
+  padding: 9px 6px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background: none;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: color 0.15s, background 0.15s;
+}
+.tab:hover {
+  color: var(--text);
+  background: rgb(120 200 255 / 6%);
+}
+/* The active tab is a lit glass chip, not an underline. */
+.tab.is-active {
+  border-color: rgb(63 224 255 / 30%);
+  background: var(--gloss), rgb(63 224 255 / 12%);
+  color: #bdf2ff;
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 20%), 0 0 16px rgb(63 224 255 / 18%);
+  text-shadow: 0 0 10px rgb(63 224 255 / 50%);
+}
+
+.panel {
+  display: none;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 14px;
+}
+.panel.is-active {
+  display: block;
+}
+.panel[data-panel='chat'].is-active {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  gap: 10px;
+  overflow: hidden;
+}
+/* Section headers as a gilt rule, the way a raid frame labels its parts. */
+.panel__title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 18px 0 8px;
+  color: var(--gold);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.panel__title::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, rgb(216 169 74 / 50%), transparent);
+}
+.panel__title:first-child {
+  margin-top: 0;
+}
+
+/* chat */
+.chat {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+.chat__msg {
+  padding: 7px 11px;
+  border: 1px solid rgb(140 210 255 / 8%);
+  border-radius: 12px;
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / 4%), rgb(255 255 255 / 0%) 60%),
+    rgb(120 200 255 / 6%);
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
+.chat__who {
+  margin-right: 6px;
+  color: var(--aqua);
+  font-weight: 700;
+}
+.chat__msg--system {
+  border-color: transparent;
+  background: transparent;
+  color: var(--muted);
+  font-size: 13px;
+  font-style: italic;
+}
+.chat__form {
+  display: flex;
+  gap: 8px;
+}
+.chat__form input {
+  flex: 1;
+  min-width: 0;
+  padding: 10px 12px;
+}
+
+/* playlists */
+.pl__head {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+.pl__head select {
+  flex: 1;
+  min-width: 0;
+  padding: 9px 10px;
+}
+.pl__tools {
+  display: flex;
+  gap: 6px;
+  margin-top: 6px;
+}
+.pl__tools .btn {
+  flex: 1;
+}
+.pl__search {
+  display: flex;
+  gap: 8px;
+  margin: 14px 0 10px;
+}
+.pl__search input {
+  flex: 1;
+  min-width: 0;
+  padding: 10px 12px;
+}
+/* Deliberately not a scroll box of its own: a fixed height cut the last row
+ * through the middle of its title, and the panel already scrolls. */
+.pl__results {
+  margin-bottom: 12px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: rgb(3 9 16 / 45%);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 4%);
+}
+.pl__tracks {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-bottom: 1px solid rgb(255 255 255 / 5%);
+  transition: background 0.12s;
+}
+.row:last-child {
+  border-bottom: 0;
+}
+.row:hover {
+  background: rgb(120 200 255 / 6%);
+}
+.row__main {
+  flex: 1;
+  min-width: 0;
+}
+/* Song titles are long and the rail is narrow, so they wrap to two lines
+ * rather than losing half their words to an ellipsis. */
+.row__title {
+  display: -webkit-box;
+  overflow: hidden;
+  font-size: 13.5px;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+.row__sub {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--muted);
+  font-size: 12px;
+  min-width: 0;
+}
+.row__sub > :last-child {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+/* Which service a track comes from decides whether an uploader can block it,
+ * so it is worth a glance rather than a hunt. */
+.badge {
+  flex: none;
+  padding: 1px 7px;
+  border: 1px solid rgb(255 255 255 / 8%);
+  border-radius: 99px;
+  background: var(--gloss), var(--panel-2);
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.badge--youtube {
+  border-color: rgb(255 109 90 / 30%);
+  background: var(--gloss), rgb(255 109 90 / 16%);
+  color: #ffb3a8;
+}
+.badge--soundcloud {
+  border-color: rgb(245 200 90 / 30%);
+  background: var(--gloss), rgb(245 200 90 / 14%);
+  color: var(--grab);
+}
+.row__actions {
+  display: flex;
+  gap: 4px;
+}
+/* Sized in CSS rather than by attribute so the row does not reflow on load. */
+.row__thumb {
+  flex: none;
+  width: 64px;
+  aspect-ratio: 16 / 9;
+  border-radius: 7px;
+  background: var(--bg-2);
+  box-shadow: 0 2px 6px rgb(0 0 0 / 50%), inset 0 0 0 1px rgb(255 255 255 / 8%);
+  object-fit: cover;
+}
+/* Up next gets the gilt edge. */
+.row.is-next {
+  background: linear-gradient(90deg, rgb(63 224 255 / 16%), rgb(63 224 255 / 5%));
+  box-shadow: inset 3px 0 0 var(--gold);
+}
+/* An import row acts on dozens of tracks at once, so it should not read as
+ * just another search result. */
+.row--playlist {
+  background: linear-gradient(90deg, rgb(63 224 255 / 12%), rgb(63 224 255 / 3%));
+}
+/* A blocked track is kept so its owner can replace it, but it must not read as
+ * something the room will play. */
+.row.is-blocked .row__title {
+  text-decoration: line-through;
+}
+.row.is-blocked .row__title,
+.row.is-blocked .row__sub {
+  color: var(--muted);
+}
+.pl__tracks .row {
+  border-radius: 10px;
+}
+.pl__tracks .row:nth-child(odd) {
+  background: rgb(255 255 255 / 2.5%);
+}
+.pl__tracks .row:hover {
+  background: rgb(120 200 255 / 7%);
+}
+.pl__tracks .row.is-next {
+  background: linear-gradient(90deg, rgb(63 224 255 / 16%), rgb(63 224 255 / 5%));
+}
+
+/* queue + history */
+.queue,
+.history {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.queue li,
+.history li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 4px;
+  border-bottom: 1px solid rgb(255 255 255 / 5%);
+  font-size: 13.5px;
+}
+.queue__pos {
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border: 1px solid rgb(216 169 74 / 35%);
+  border-radius: 7px;
+  background: var(--gloss), rgb(216 169 74 / 10%);
+  color: var(--gold-2);
+  font-size: 11.5px;
+  font-weight: 700;
+}
+.queue__dj {
+  padding: 10px 12px;
+  border: 1px solid rgb(63 224 255 / 25%);
+  border-radius: 12px;
+  background: var(--gloss), rgb(63 224 255 / 8%);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 12%);
+  font-weight: 600;
+}
+.history__votes {
+  margin-left: auto;
+  color: var(--muted);
+  font-size: 12px;
+  white-space: nowrap;
+}
+.empty {
+  padding: 10px 2px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+/* avatar picker */
+.picker__preview {
+  display: grid;
+  place-items: center;
+  min-height: 250px;
+  margin-bottom: 12px;
+  border: 1px solid rgb(216 169 74 / 35%);
+  border-radius: var(--radius);
+  background:
+    radial-gradient(60% 70% at 50% 100%, rgb(63 224 255 / 20%), transparent 70%),
+    linear-gradient(to bottom, #0e1c30, #070d18);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 8%), inset 0 -30px 40px -30px rgb(63 224 255 / 30%);
+}
+.picker__controls {
+  display: grid;
+  gap: 10px;
+}
+.picker__row {
+  display: grid;
+  grid-template-columns: 84px minmax(0, 1fr);
+  align-items: center;
+  gap: 10px;
+}
+.picker__row > span {
+  color: var(--muted);
+  font-size: 12.5px;
+}
+.picker__row select {
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 10px;
+}
+/* A costume hides these, so the control says so rather than doing nothing. */
+.picker__row.is-disabled {
+  opacity: 0.45;
+}
+.picker__actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 14px;
+}
+.picker__actions .btn {
+  flex: 1;
+}
+
+/* --- toasts -------------------------------------------------------------- */
+
+.toasts {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 60;
+  display: grid;
+  gap: 8px;
+  justify-items: end;
+}
+.toast {
+  max-width: min(420px, calc(100vw - 36px));
+  padding: 10px 14px;
+  border: 1px solid var(--line-strong);
+  border-radius: 12px;
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / 8%), rgb(255 255 255 / 0%) 50%),
+    rgb(8 18 32 / 80%);
+  backdrop-filter: var(--blur);
+  box-shadow: var(--shadow), inset 3px 0 0 var(--aqua);
+  font-size: 14px;
+  animation: toast-in 0.2s ease-out;
+}
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn--primary:hover:not(:disabled)::after,
+  .toast {
+    animation: none;
+  }
+}
+
+@media (max-width: 1040px) {
+  /* The rail moves under the stage and takes a third of the height with it,
+   * so the room shrinks again to keep the vote buttons on screen. */
+  :root {
+    --booth-h: 150px;
+    --dj-scale: 0.154;
+    --dance-scale: 0.13;
+    --floor-pad: 6px;
+  }
+  .app {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      'top'
+      'main'
+      'side';
+    grid-template-rows: auto minmax(0, 1fr) minmax(200px, 30vh);
+  }
+  .stage {
+    grid-template-rows: minmax(110px, 1fr) minmax(var(--room-min), 1.3fr) auto;
+  }
+  .side {
+    border-left: 0;
+    border-top: 1px solid var(--line);
+  }
+  /* A smaller screen leaves room for the dance floor below it. */
+  .screen__frame {
+    width: min(100%, 470px, max(200px, calc((100cqh - 22px) * 16 / 9)));
+  }
+}

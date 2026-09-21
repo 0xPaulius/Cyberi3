@@ -1,0 +1,16 @@
+<!-- Hat slot: 220x150. Crown centre (110, 44), head spans x 23.5 to 196.5. -->
+<svg xmlns="http://www.w3.org/2000/svg" width="220" height="150" viewBox="0 0 220 150">
+  <g>
+    <ellipse cx="110" cy="78" rx="58" ry="22" fill="#6b4426"/>
+    <ellipse cx="110" cy="72" rx="58" ry="20" fill="#7d5029"/>
+    <ellipse cx="110" cy="52" rx="40" ry="18" fill="#8a5a2e"/>
+    <ellipse cx="110" cy="47" rx="40" ry="16" fill="#946033"/>
+    <ellipse cx="110" cy="29" rx="23" ry="12" fill="#a06a38"/>
+    <path d="M96 24 Q110 2 122 24 Z" fill="#a06a38"/>
+    <ellipse cx="96" cy="60" rx="9" ry="10" fill="#fdfdfd"/>
+    <ellipse cx="124" cy="60" rx="9" ry="10" fill="#fdfdfd"/>
+    <circle cx="97" cy="62" r="5" fill="#1b1b1b"/>
+    <circle cx="125" cy="62" r="5" fill="#1b1b1b"/>
+    <path d="M96 78 Q110 90 124 78" stroke="#3d2413" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+  </g>
+</svg>

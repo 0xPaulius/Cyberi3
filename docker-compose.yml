@@ -1,0 +1,18 @@
+services:
+  plugdj:
+    build: .
+    image: plugdj:latest
+    container_name: plugdj
+    restart: unless-stopped
+    ports:
+      - '${PORT:-3000}:3000'
+    environment:
+      # Change SESSION_SECRET in .env; altering it later signs everyone out.
+      SESSION_SECRET: ${SESSION_SECRET:-please-change-me}
+      ROOM_NAME: ${ROOM_NAME:-The Basement}
+      DB_PATH: /app/data/plugdj.db
+    volumes:
+      - plugdj-data:/app/data
+
+volumes:
+  plugdj-data:

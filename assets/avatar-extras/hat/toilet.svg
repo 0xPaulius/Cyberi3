@@ -1,0 +1,12 @@
+<!-- Hat slot: 220x150. Crown centre (110, 44), head spans x 23.5 to 196.5. -->
+<svg xmlns="http://www.w3.org/2000/svg" width="220" height="150" viewBox="0 0 220 150">
+  <!-- A toilet seat worn as a hat, lid up. -->
+  <g>
+    <path d="M62 24 Q110 -2 158 24 Q166 30 158 38 Q110 16 62 38 Q54 30 62 24 Z" fill="#e9edf2"/>
+    <path d="M70 28 Q110 8 150 28 Q110 18 70 34 Z" fill="#fbfdff"/>
+    <ellipse cx="110" cy="70" rx="56" ry="26" fill="#e9edf2"/>
+    <ellipse cx="110" cy="70" rx="38" ry="15" fill="#8e99a8"/>
+    <path d="M54 70 Q54 44 110 44 Q166 44 166 70" fill="none" stroke="#cfd6df" stroke-width="6"/>
+    <rect x="96" y="30" width="28" height="10" rx="5" fill="#cfd6df"/>
+  </g>
+</svg>

@@ -1,0 +1,18 @@
+<!-- Costume trouser: 111x166. Outline traced from the pack's own trouser leg. -->
+<svg xmlns="http://www.w3.org/2000/svg" width="111" height="166" viewBox="0 0 111 166">
+  <defs>
+    <linearGradient id="chrome" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#e8f3fb"/>
+      <stop offset="0.5" stop-color="#8aa6bd"/>
+      <stop offset="1" stop-color="#c8dbe8"/>
+    </linearGradient>
+  </defs>
+  <g>
+    <polygon fill="url(#chrome)" points="56,0 80,12 84,24 88,36 92,48 95,60 98,72 101,84 104,96 106,108 108,120 109,132 110,144 104,156 102,164 40,164 38,156 38,144 37,132 36,120 35,108 33,96 30,84 27,72 23,60 19,48 12,36 4,24 8,12 39,0"/>
+    <!-- cargo pocket -->
+    <path d="M62 84 H100 L102 116 H64 Z" fill="#b9cfdf" stroke="#7d97ad" stroke-width="2"/>
+    <path d="M62 92 H100" stroke="#7d97ad" stroke-width="2"/>
+    <path d="M50 18 L46 160" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round" opacity="0.7"/>
+    <path d="M40 150 H104" stroke="#3fe0ff" stroke-width="3" opacity="0.8"/>
+  </g>
+</svg>

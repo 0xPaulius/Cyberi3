@@ -1,0 +1,12 @@
+<!-- Face slot: 200x120. Sits under the nose (bottom y 75) and over the mouth. -->
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="120" viewBox="0 0 200 120">
+  <g>
+    <path d="M100 78
+             Q86 70 66 70 Q40 70 36 84 Q34 96 48 96 Q64 96 72 84 Q82 74 100 82
+             Q118 74 128 84 Q136 96 152 96 Q166 96 164 84 Q160 70 134 70 Q114 70 100 78 Z"
+          fill="#3a2a1d"/>
+    <path d="M100 80 Q84 74 68 74 Q46 74 42 84 Q58 78 76 80 Q90 82 100 84
+             Q110 82 124 80 Q142 78 158 84 Q154 74 132 74 Q116 74 100 80 Z"
+          fill="#4d3826"/>
+  </g>
+</svg>

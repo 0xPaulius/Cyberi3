@@ -1,0 +1,8 @@
+<!-- Face slot: 200x120. Covers the left eye at (54.5, 46.5); strap runs to the head edge. -->
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="120" viewBox="0 0 200 120">
+  <g>
+    <path d="M8 22 Q100 6 192 26" stroke="#1c1c1c" stroke-width="7" fill="none"/>
+    <path d="M28 30 H82 Q86 62 55 68 Q26 64 26 34 Z" fill="#232323"/>
+    <path d="M32 34 H76 Q78 42 74 46 Q52 40 32 44 Z" fill="#333"/>
+  </g>
+</svg>

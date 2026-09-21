@@ -1,0 +1,16 @@
+<!-- Costume trouser: 111x166. Outline traced from the pack's own trouser leg. -->
+<svg xmlns="http://www.w3.org/2000/svg" width="111" height="166" viewBox="0 0 111 166">
+  <defs>
+    <linearGradient id="aqua" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#8ff0ff"/>
+      <stop offset="0.55" stop-color="#2fb5ff"/>
+      <stop offset="1" stop-color="#1465d6"/>
+    </linearGradient>
+  </defs>
+  <g>
+    <polygon fill="url(#aqua)" points="56,0 80,12 84,24 88,36 92,48 95,60 98,72 101,84 104,96 106,108 108,120 109,132 110,144 104,156 102,164 40,164 38,156 38,144 37,132 36,120 35,108 33,96 30,84 27,72 23,60 19,48 12,36 4,24 8,12 39,0"/>
+    <path d="M50 18 L46 160" stroke="#fff" stroke-width="7" fill="none" stroke-linecap="round" opacity="0.6"/>
+    <circle cx="84" cy="110" r="7" fill="none" stroke="#e6fbff" stroke-width="2" opacity="0.85"/>
+    <circle cx="82" cy="108" r="2" fill="#fff"/>
+  </g>
+</svg>

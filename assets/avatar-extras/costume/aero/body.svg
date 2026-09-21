@@ -1,0 +1,34 @@
+<!-- Costume torso canvas: 176x200. Axis x=89, shoulders y=26, hips y=200.
+     A Frutiger Aero bodysuit: glossy aqua-to-blue, a white specular sweep down
+     one side, and bubbles caught in the material. -->
+<svg xmlns="http://www.w3.org/2000/svg" width="176" height="200" viewBox="0 0 176 200">
+  <defs>
+    <linearGradient id="aqua" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#8ff0ff"/>
+      <stop offset="0.5" stop-color="#2fb5ff"/>
+      <stop offset="1" stop-color="#1465d6"/>
+    </linearGradient>
+    <linearGradient id="gloss" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fff" stop-opacity="0.75"/>
+      <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <g>
+    <path d="M12 62 Q12 30 40 26 L62 26 Q89 42 116 26 L138 26 Q165 30 165 62 L165 200 H12 Z" fill="url(#aqua)"/>
+    <path d="M12 62 Q12 30 40 26 L62 26 Q89 42 116 26 L138 26 Q165 30 165 62 L165 110 Q89 128 12 110 Z" fill="url(#gloss)"/>
+    <path d="M28 44 Q40 34 56 32 Q60 90 52 190" stroke="#fff" stroke-width="7" fill="none" stroke-linecap="round" opacity="0.7"/>
+    <path d="M89 42 V200" stroke="#0d4fa8" stroke-width="2" opacity="0.5"/>
+    <path d="M62 26 Q89 42 116 26" stroke="#dffaff" stroke-width="5" fill="none"/>
+    <g fill="none" stroke="#e6fbff" stroke-width="2.5" opacity="0.85">
+      <circle cx="128" cy="92" r="14"/>
+      <circle cx="146" cy="130" r="8"/>
+      <circle cx="112" cy="156" r="10"/>
+      <circle cx="40" cy="150" r="6"/>
+    </g>
+    <g fill="#fff" opacity="0.9">
+      <circle cx="122" cy="86" r="3.5"/>
+      <circle cx="143" cy="126" r="2"/>
+      <circle cx="108" cy="152" r="2.5"/>
+    </g>
+  </g>
+</svg>
